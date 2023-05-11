@@ -18,6 +18,23 @@
 
 <br><br>
 <input type="submit" value="提交">
+ <div id="result">
+   <p>选项1: <span id="option1">0</span></p>  
+   <p>选项2: <span id="option2">0</span></p> 
+</div>
+
+<script> 
+function getResult() {
+  $.ajax({
+    url: "result.php",
+    success: function(data) {
+      $("#option1").text(data.split("<br>")[0].split(":")[1]); 
+      $("#option2").text(data.split("<br>")[1].split(":")[1]);
+    }
+  });
+}
+setInterval(getResult, 1000);  // 每1秒调用一次
+</script>
   
 </form> 
 </body>
