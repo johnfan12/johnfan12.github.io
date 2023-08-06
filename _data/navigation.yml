@@ -1,6 +1,6 @@
 main:
   - title: "Posts"
-    url: /year-archive/
+    url: /index/
   - title: "Categories"
     url: /categories/
   - title: "Pages"
