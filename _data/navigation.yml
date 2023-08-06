@@ -1,9 +1,3 @@
 main:
-  - title: "Posts"
-    url: /index/
-  - title: "Categories"
-    url: /categories/
-  - title: "Pages"
-    url: /page-archive/
   - title: "External Link"
     url: https://google.com
