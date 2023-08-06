@@ -29,7 +29,7 @@ plugins:
   - jekyll-include-cache
 author:
   name     : "John Fan"
-  avatar   : "/assets/images/kawaii.png"
+  avatar   : "/assets/images/header.jpg"
   bio      : "A student. To record my feelings, my ideas."
   location : "CA, USA"
 header:
