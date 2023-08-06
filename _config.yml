@@ -33,7 +33,7 @@ author:
   bio      : "A student. To record my feelings, my ideas."
   location : "CA, USA"
 header:
-  image: /assets/images/header.jpg
+  image: ”/assets/images/header.jpg“
 # exclude:
 #   - .sass-cache/
 #   - .jekyll-cache/
