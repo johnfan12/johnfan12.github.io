@@ -10,6 +10,7 @@ logo: "/assets/images/kawaii.png"
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 minimal_mistakes_skin: "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 search: true
+author_profile: true
 defaults:
   # _posts
   - scope:
@@ -21,7 +22,7 @@ defaults:
       author_profile: true
       read_time: true
       comments: true
-      share: true
+      share: false
       related: true 
 plugins:
   - jekyll-feed
