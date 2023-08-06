@@ -19,7 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: Share visions
-subtitle: "Version 2.0"
+subtitle: "stay calm"
 name: "Michael Rose"
 url: johnfan12.github.io
 email: your-email@example.com
@@ -54,7 +54,11 @@ plugins:
 #
 # Excluded items can be processed by explicitly listing the directories or
 # their entries' file path in the `include:` list.
-#
+author:
+  name     : "John Fan"
+  avatar   : "/assets/images/kawaii.png"
+  bio      : "A student"
+  location : "CA, USA"
 # exclude:
 #   - .sass-cache/
 #   - .jekyll-cache/
