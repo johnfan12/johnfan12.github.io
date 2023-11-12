@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Number Generator with User Input</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+
+    #result {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Random Number Generator with User Input</h1>
+  <label for="userInput">Enter a number:</label>
+  <input type="number" id="userInput" placeholder="Enter a number">
+  <button onclick="generateRandomNumber()">Generate Number with 10% Error</button>
+  <p id="result"></p>
+
+  <script>
+    // 生成输入数字的10%误差的随机数
+    function generateRandomNumber() {
+      const userInput = document.getElementById('userInput').value;
+
+      // 检查用户是否输入了有效数字
+      if (isNaN(userInput)) {
+        alert('Please enter a valid number.');
+        return;
+      }
+
+      const inputNumber = parseFloat(userInput);
+      const randomWith10PercentError = generateRandomNumberWith10PercentError(inputNumber);
+      const resultElement = document.getElementById('result');
+      resultElement.textContent = `Generated Number: ${randomWith10PercentError.toFixed(2)}`;
+    }
+
+    // 生成输入数字的10%误差的随机数的函数
+    function generateRandomNumberWith10PercentError(inputNumber) {
+      const errorRange = 0.1;
+      const lowerLimit = 1 - errorRange;
+      const upperLimit = 1 + errorRange;
+      const randomNumber = inputNumber * (Math.random() * (upperLimit - lowerLimit) + lowerLimit);
+      return randomNumber;
+    }
+  </script>
+</body>
+</html>
