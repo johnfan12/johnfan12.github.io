@@ -3,17 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的博客</title>
     <style>
-        .center-text {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
             text-align: center;
-            text-size-adjust: 200%;
+            padding: 1em;
+        }
+
+        nav {
+            background-color: #666;
+            padding: 1em;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1em;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 2em;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
         }
     </style>
-    <title>机器视觉总结</title>
 </head>
 <body>
-    <h1 class="center-text">内容由BingAI根据PPT生成，仅供参考</h1>
-    <p class="center-text"><a href="题目.html">题目</a></p>
-    <p class="center-text"><a href="总结.html">总结</a></p>
+
+    <header>
+        <h1>欢迎来到我的博客</h1>
+    </header>
+
+    <nav>
+        <a href="#">首页</a>
+        <a href="#">文章</a>
+        <a href="vision/study.html">学习区</a>
+        <a href="#">联系我</a>
+    </nav>
+
+    <main>
+        <h2>最新文章</h2>
+        <article>
+            <h3>机器视觉考试竟然成为记忆力考试！</h3>
+            <p>如何表达我对出卷人的愤怒😡</p>
+            <a href="blogs/machinevisionexam.html">阅读更多</a>
+        </article>
+<!--
+        <article>
+            <h3>另一篇文章标题</h3>
+            <p>另一篇文章内容简介...</p>
+            <a href="#">阅读更多</a>
+        </article>-->
+    </main>
+
+    <footer>
+        <p>&copy; 2023 我的博客</p>
+    </footer>
+
 </body>
 </html>
