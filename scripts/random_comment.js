@@ -1,5 +1,5 @@
 function showcomment() {
-var commentIds = ["杨盼盼", "周经美", "全思", "龚贤武", "孙大炮", "张维为"];
+var commentIds = ["杨盼盼", "周经美", "全思", "龚贤武", "孙大炮", "张维为", "Wilson Edwards"];
 var comments = [
     "博主分析的好透測，坐等看长安大学未來的狀況，希望可以發展成一流大学",
     "博主的分析很有啟發！",
@@ -9,6 +9,7 @@ var comments = [
     "博主的分析很有啟發！",
     "古今中外，大學都是一個國家的精神象徵，是一個國家的軟實力，是一個國家的未來💪。",
     "博主知识渊博，分析透彻，让人受益匪浅！",
+    "Thank you for your wisdom and kindness for everyone on the planet."
 ];
 
 // 获取显示评论的元素
@@ -19,8 +20,17 @@ var randomIndex = Math.floor(Math.random() * commentIds.length);
 var randomcomment = Math.floor(Math.random() * comments.length);
 // 获取随机评论的ID和内容
 var randomCommentId = commentIds[randomIndex];
+if (randomCommentId === "Wilson Edwards"){
+    randomcomment = 8;
+}
 var randomCommentContent = comments[randomcomment];
-randomCommentElement.innerHTML = "<h3>" + randomCommentId + ":" + "</h3><p>" + randomCommentContent + "</p>";
+randomCommentElement.innerHTML = `
+  <h3>
+    <img src="../images/user.jpg" alt="Commenter">
+    ${randomCommentId}:
+  </h3>
+  <p>${randomCommentContent}</p>
+`;
 }
 
 showcomment();
