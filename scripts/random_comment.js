@@ -12,6 +12,7 @@ var comments = [
     "Thank you for your wisdom and kindness for everyone on the planet."
 ];
 
+var person_links = ["https://ys.mihoyo.com/"]
 // 获取显示评论的元素
 var randomCommentElement = document.getElementById("random-comment");
 
@@ -23,11 +24,14 @@ var randomCommentId = commentIds[randomIndex];
 if (randomCommentId === "Wilson Edwards"){
     randomcomment = 8;
 }
+
 var randomCommentContent = comments[randomcomment];
 randomCommentElement.innerHTML = `
   <h3>
-    <img src="../images/user.jpg" alt="Commenter">
-    ${randomCommentId}:
+    <img src="../images/user.jpg" alt="Commenter" >
+    <a href=${person_links}>
+      ${randomCommentId}: 
+    </a>
   </h3>
   <p>${randomCommentContent}</p>
 `;
