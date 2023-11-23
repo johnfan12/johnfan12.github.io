@@ -1,0 +1,96 @@
+/* 棋盘样式 */
+.board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(11, 1fr);
+    width: 540px;
+    height: 660px;
+    border: 20px solid rgb(237, 232, 224);
+    margin: auto;
+    /* Add this line to center the board */
+    margin-top: 50px;
+    /* Adjust the margin-top as needed */
+}
+
+/* 棋子样式 */
+.piece {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: bold;
+    border: none; /* Remove the outer border */
+    position: relative;
+    user-select: none;
+}
+
+.piece::before,
+.piece::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(150, 117, 64); /* Color of the cross */
+    z-index: -1; 
+}
+
+.piece::before {
+    transform: translateY(-50%);
+}
+
+.piece::after {
+    transform: translateY(-50%) rotate(90deg);
+}
+
+.river {
+    grid-column: 1 / span 9;
+    grid-row: 6 / span 1;
+    background-color: lightblue;
+    text-align: center;
+    font-size: 35px;
+}
+
+/* X棋子样式 */
+.x-piece {
+    color: red;
+}
+
+/* O棋子样式 */
+.o-piece {
+    color: blue;
+}
+
+.showwin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: bold;
+    color: red;
+}
+
+.center-container {
+    text-align: center;
+}
+
+.reset {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+    margin-top: 25px;
+}
+
+.circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+    font-weight: bold;
+    color: black;
+    margin-top: 25px;
+}

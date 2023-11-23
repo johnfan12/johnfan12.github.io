@@ -74,7 +74,6 @@ class Game {
 }
 
 var game = new Game();
-
 function handleCellClick(event) {
     if (event.target.classList.contains('piece')) {
         const cellId = event.target.id;
