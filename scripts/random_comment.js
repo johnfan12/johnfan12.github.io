@@ -1,5 +1,5 @@
 function showcomment() {
-var commentIds = ["杨盼盼", "周经美", "全思", "龚贤武", "孙大炮", "张维为", "Wilson Edwards"];
+var commentIds = ["杨盼盼", "周经美", "全思", "龚贤武", "朱进玉", "张维为", "Wilson Edwards"];
 var comments = [
     "博主分析的好透測，坐等看长安大学未來的狀況，希望可以發展成一流大学",
     "博主的分析很有啟發！",
