@@ -10,13 +10,13 @@
 
 <body>
 
-    <div class="board" onclick="handleCellClick(event)">
+    <div class="board" id="chessBoard" onclick="handleCellClick(event)">
         <div id="river"class="river">楚河     漢界</div>
         <div id="0-0"class="piece" style="color: red;">車</div>
         <div id="0-1"class="piece" style="color: red;">馬</div>
         <div id="0-2"class="piece" style="color: red;">相</div>
         <div id="0-3"class="piece" style="color: red;">仕</div>
-        <div id="0-4"class="piece" style="color: red;">帅</div>
+        <div id="0-4"class="piece" style="color: red;">帥</div>
         <div id="0-5"class="piece" style="color: red;">仕</div>
         <div id="0-6"class="piece" style="color: red;">相</div>
         <div id="0-7"class="piece" style="color: red;">馬</div>
@@ -108,6 +108,7 @@
     </div>
     <div class="center-container">
         <button id="換邊" class="reset" onclick="red_player()">換邊</button>
+        <button id="重置" class="reset" onclick="reset()">重置</button>
     </div>
     
 

@@ -21,7 +21,9 @@
     font-weight: bold;
     border: none; /* Remove the outer border */
     position: relative;
+    -webkit-user-select: none;
     user-select: none;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 
 .piece::before,
@@ -43,6 +45,7 @@
 .piece::after {
     transform: translateY(-50%) rotate(90deg);
 }
+
 
 .river {
     grid-column: 1 / span 9;
