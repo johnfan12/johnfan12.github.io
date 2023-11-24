@@ -514,12 +514,12 @@ class Game {
         else if (this.board[row][col] === '帥') {
             return this.get_available_moves_for_shuai(row, col);
         }
-         if (this.moveable(this.choosing[0], this.choosing[1])) {
+         if (this.moveable(row, col)) {
             return available_moves;
          }
          else {
              for (let i = 0; i < available_moves.length; i++) {
-                if (available_moves[i][1] !== this.choosing[1]) {
+                if (available_moves[i][1] !== col) {
                     available_moves.splice(i, 1);
                     i--;
                 }
@@ -556,24 +556,24 @@ function handleCellClick(event) {
             if (game.player === 'red'){
                 if(game.isPlayerTurn && cell.style.color === 'red')
                 {
-                cell.style.fontSize = '45px';
+                cell.style.fontSize = '42px';
                 game.choosing = [9-row, 8-col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'black')
                 {
-                    cell.style.fontSize = '45px';
+                    cell.style.fontSize = '42px';
                     game.choosing = [9 - row, 8 - col];
                 }
             }
             else{
                 if(game.isPlayerTurn && cell.style.color === 'black')
                 {
-                cell.style.fontSize = '45px';
+                cell.style.fontSize = '42px';
                 game.choosing = [row, col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'red')
                 {
-                    cell.style.fontSize = '45px';
+                    cell.style.fontSize = '42px';
                     game.choosing = [row, col];
                 }
             }
@@ -586,8 +586,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '35px';
-                cell.style.fontSize = '45px';
+                fpiece.style.fontSize = '33px';
+                cell.style.fontSize = '42px';
                 game.choosing = [9-row, 8-col];
                 return;
                 }
@@ -596,7 +596,14 @@ function handleCellClick(event) {
                 {
                     game.makeMove(game.choosing, transform(row, col));
                     piece_move(fpiece, cell);
+                    game.choosing = null;
+                    fpiece.style.fontSize = '33px';
+                    cell.style.fontSize = '33px';
                 }
+                else{
+                    alert('似乎不可以下在這裏喔');
+                }
+
             }
             else{
                 const id = game.choosing[0] + '-' + game.choosing[1];
@@ -604,8 +611,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '35px';
-                cell.style.fontSize = '45px';
+                fpiece.style.fontSize = '33px';
+                cell.style.fontSize = '42px';
                 game.choosing = [row, col];
                 return;
                 }
@@ -614,13 +621,110 @@ function handleCellClick(event) {
                 {
                     game.makeMove(game.choosing, [row, col]);
                     piece_move(fpiece, cell);
-                }   
+                    game.choosing = null;
+                    fpiece.style.fontSize = '33px';
+                    cell.style.fontSize = '33px';
+                }
+                else{
+                    alert('似乎不可以下在這裏喔');
+                }
             }
-            fpiece.style.fontSize = '35px';
-            game.choosing = null;
+            if (red_king_in_danger() || black_king_in_danger()) {
+                setTimeout(function(){confirm('將軍！');}, 100);
+            }
             if (game.isGameOver) {
-                alert('Game Over');
-                reset();
+                setTimeout(function(){confirm('游戲結束！');}, 100);
+            }
+        }
+    }
+    if (event.target.classList.contains('x_piece')) {
+        const cellId = event.target.id;
+        const cell = document.getElementById(cellId);
+        const row = parseInt(cellId[0]);
+        const col = parseInt(cellId[2]);
+        if(game.choosing === null){
+            if (game.player === 'red'){
+                if(game.isPlayerTurn && cell.style.color === 'red')
+                {
+                cell.style.fontSize = '42px';
+                game.choosing = [9-row, 8-col];
+                }
+                else if (!game.isPlayerTurn && cell.style.color === 'black')
+                {
+                    cell.style.fontSize = '42px';
+                    game.choosing = [9 - row, 8 - col];
+                }
+            }
+            else{
+                if(game.isPlayerTurn && cell.style.color === 'black')
+                {
+                cell.style.fontSize = '42px';
+                game.choosing = [row, col];
+                }
+                else if (!game.isPlayerTurn && cell.style.color === 'red')
+                {
+                    cell.style.fontSize = '42px';
+                    game.choosing = [row, col];
+                }
+            }
+        }
+        else{
+            if (game.player === 'red'){
+                choose = transform(game.choosing[0], game.choosing[1]);
+                const id = choose[0] + '-' + choose[1];
+                var fpiece = document.getElementById(id);
+                if (fpiece.style.color === cell.style.color) 
+                {
+                game.choosing = null;
+                fpiece.style.fontSize = '33px';
+                cell.style.fontSize = '42px';
+                game.choosing = [9-row, 8-col];
+                return;
+                }
+                const moves = game.get_available_moves(game.choosing[0], game.choosing[1]);
+                if (moves.some(x => x[0] === 9 - row && x[1] === 8 - col))
+                {
+                    game.makeMove(game.choosing, transform(row, col));
+                    piece_move(fpiece, cell);
+                    game.choosing = null;
+                    fpiece.style.fontSize = '33px';
+                    cell.style.fontSize = '33px';
+                }
+                else{
+                    alert('似乎不可以下在這裏喔');
+                }
+            }
+            else{
+                const id = game.choosing[0] + '-' + game.choosing[1];
+                var fpiece = document.getElementById(id);
+                if (fpiece.style.color === cell.style.color) 
+                {
+                game.choosing = null;
+                fpiece.style.fontSize = '33px';
+                cell.style.fontSize = '42px';
+                game.choosing = [row, col];
+                return;
+                }
+                const moves = game.get_available_moves(game.choosing[0], game.choosing[1]);
+                if (moves.some(x => x[0] === row && x[1] === col))
+                {
+                    game.makeMove(game.choosing, [row, col]);
+                    piece_move(fpiece, cell);
+                    game.choosing = null;
+                    fpiece.style.fontSize = '33px';
+                    cell.style.fontSize = '33px';
+                }   
+                else{
+                    alert('似乎不可以下在這裏喔');
+                }
+            }
+            if (red_king_in_danger() || black_king_in_danger()) {
+                //過一會消失的提示
+                setTimeout(function(){confirm('將軍！');}, 100);
+
+            }
+            if (game.isGameOver) {
+                setTimeout(function(){confirm('游戲結束');}, 100);
             }
         }
     }
@@ -688,9 +792,14 @@ function reset() {
             
             var div = document.createElement("div");
             div.id = `${row}-${col}`;
-            div.className = "piece";
-            div.innerHTML = piece;
-
+            if((row === 1 && col === 4) || (row === 8 && col === 4)){
+                div.className = "x_piece";
+                div.innerHTML = piece;
+            }
+            else{
+                div.className = "piece";
+                div.innerHTML = piece;
+            }
             if (piece !== "") {
                 div.style.color = (row < 5) ? "red" : "black";
             }
@@ -718,4 +827,50 @@ function reset() {
             else
                 return;
     
+}
+
+function red_king_in_danger(){
+    for (let i=0; i<10; i++){
+        for (let j=0; j<9; j++){
+            if (document.getElementById(i.toString() + '-' + j.toString()).style.color === 'black'){
+                if(game.player === 'red'){
+                    row = 9-i;
+                    col = 8-j;
+                }
+                else{
+                    row = i;
+                    col = j;
+                }
+                const moves = game.get_available_moves(row, col);
+                for (let i=0; i<moves.length; i++){
+                    if (game.board[moves[i][0]][moves[i][1]] === '帥'){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+}
+
+function black_king_in_danger(){
+    for (let i=0; i<10; i++){
+        for (let j=0; j<9; j++){
+            if (document.getElementById(i.toString() + '-' + j.toString()).style.color === 'red'){
+                if(game.player === 'red'){
+                    row = 9-i;
+                    col = 8-j;
+                }
+                else{
+                    row = i;
+                    col = j;
+                }
+                const moves = game.get_available_moves(row, col);
+                for (let i=0; i<moves.length; i++){
+                    if (game.board[moves[i][0]][moves[i][1]] === '將'){
+                        return true;
+                    }
+                }
+            }
+        }
+    }
 }
