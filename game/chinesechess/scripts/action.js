@@ -1,65 +1,104 @@
 class Game {
     constructor(document) {
-        this.board = new Array(11);
+        const chessPieces = [
+            "車", "馬", "相", "仕", "帥", "仕", "相", "馬", "車",
+            "", "", "", "", "", "", "", "", "",
+            "", "炮", "", "", "", "", "", "炮", "",
+            "兵", "", "兵", "", "兵", "", "兵", "", "兵",
+            "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "",
+            "卒", "", "卒", "", "卒", "", "卒", "", "卒",
+            "", "炮", "", "", "", "", "", "炮", "",
+            "", "", "", "", "", "", "", "", "",
+            "車", "馬", "象", "士", "將", "士", "象", "馬", "車"];
+        this.board = new Array(10);
         for (let i = 0; i < 10; i++) {
-                this.board[i] = new Array(9);
-            }
+            this.board[i] = new Array(9);
+            for (let j = 0; j < 9; j++) {
+                if (i < 5) {
+                    this.board[i][j] = new Array(2);
+                    this.board[i][j] = ['red', chessPieces[i * 9 + j]];
+                }
+                else {
+                    this.board[i][j] = new Array(2);
+                    this.board[i][j] = ['black', chessPieces[i * 9 + j]];
+                }
+        }
+    }
         this.isPlayerTurn = true;
         this.isGameOver = false;
         this.step = 0;
         this.choosing = null;
         this.player = 'black'
-        this.recoder = [];
-        this.eaten = '';
+        this.recorder = [];
     }
 
-
     makeMove(fplace, nplace) {
-        if (this.board[nplace[0]][nplace[1]] === '將' || this.board[nplace[0]][nplace[1]] === '帥') {
+        if (this.board[nplace[0]][nplace[1]][1] === '將' || this.board[nplace[0]][nplace[1]][1] === '帥') {
             this.isGameOver = true;
         }
-        if (this.board[nplace[0]][nplace[1]] !== '') {
-            this.eaten = this.board[nplace[0]][nplace[1]];
-        }
-        var temp = this.board[fplace[0]][fplace[1]];
-        this.board[fplace[0]][fplace[1]] = '';
-        this.board[nplace[0]][nplace[1]] = temp;
-        this.step++;
+        var temp = this.board[fplace[0]][fplace[1]][1];
+        this.board[fplace[0]][fplace[1]][1] = '';
+        this.board[nplace[0]][nplace[1]][1] = temp;
         this.isPlayerTurn = !this.isPlayerTurn;
-        this.recoder.push([fplace, nplace]);
+        this.recorder[this.step] = [fplace, nplace];
+        this.step++;
+    }
+
+    replay_move(fplace, nplace) {
+        var temp = this.board[fplace[0]][fplace[1]][1];
+        this.board[fplace[0]][fplace[1]][1] = '';
+        this.board[nplace[0]][nplace[1]][1] = temp;
+        this.isPlayerTurn = !this.isPlayerTurn;
     }
 
     undo() {
         if (this.step === 0) {
             return;
         }
+        this.reset();
+        for (let i=0; i<this.step-1;i++)
+        {
+            this.replay_move(this.recorder[i][0], this.recorder[i][1]);
+        }
         this.step--;
-        var fplace = this.recoder[this.step][0];
-        var nplace = this.recoder[this.step][1];
-        var temp = this.board[nplace[0]][nplace[1]];
-        this.board[nplace[0]][nplace[1]] = this.eaten;
-        this.board[fplace[0]][fplace[1]] = temp;
-        this.isPlayerTurn = !this.isPlayerTurn;
-        this.recoder.pop();
-        return [this.eaten, nplace, fplace];
     }
 
         
 
     reset() {
-        this.board = new Array(11);
+        const chessPieces = [
+            "車", "馬", "相", "仕", "帥", "仕", "相", "馬", "車",
+            "", "", "", "", "", "", "", "", "",
+            "", "炮", "", "", "", "", "", "炮", "",
+            "兵", "", "兵", "", "兵", "", "兵", "", "兵",
+            "", "", "", "", "", "", "", "", "",
+            "", "", "", "", "", "", "", "", "",
+            "卒", "", "卒", "", "卒", "", "卒", "", "卒",
+            "", "炮", "", "", "", "", "", "炮", "",
+            "", "", "", "", "", "", "", "", "",
+            "車", "馬", "象", "士", "將", "士", "象", "馬", "車"];
+        this.board = new Array(10);
         for (let i = 0; i < 10; i++) {
             this.board[i] = new Array(9);
-        }
+            for (let j = 0; j < 9; j++) {
+                if (i < 5) {
+                    this.board[i][j] = new Array(2);
+                    this.board[i][j] = ['red', chessPieces[i * 9 + j]];
+                }
+                else {
+                    this.board[i][j] = new Array(2);
+                    this.board[i][j] = ['black', chessPieces[i * 9 + j]];
+                }
+            }
         this.isPlayerTurn = true;
         this.isGameOver = false;
-        this.step = 0;
         this.choosing = null;
-        this.player = 'black'
     }
+}
 
     check_empty(row, col) {
-        if (this.board[row][col] === '') {
+        if (this.board[row][col][1] === '') {
             return true;
         }
         return false;
@@ -406,13 +445,13 @@ class Game {
 
     jiang_is_face_to_face(row, col) {
         for (let i = row - 1; !this.check_bounary(i, col); i--) {
-            if (this.board[i][col] === '') {
+            if (this.board[i][col][1] === '') {
                 continue;
             }
-            else if (this.board[i][col] !== '帥') {
+            else if (this.board[i][col][1] !== '帥') {
                 return false;
             }
-            else if (this.board[i][col] === '帥') {
+            else if (this.board[i][col][1] === '帥') {
                 return true;
             }
         }
@@ -421,13 +460,13 @@ class Game {
 
     shuai_is_face_to_face(row, col) {
         for (let i = row + 1; !this.check_bounary(i, col); i++) {
-            if (this.board[i][col] === '') {
+            if (this.board[i][col][1] === '') {
                 continue;
             }
-            else if (this.board[i][col] !== '將') {
+            else if (this.board[i][col][1] !== '將') {
                 return false;
             }
-            else if (this.board[i][col] === '將') {
+            else if (this.board[i][col][1] === '將') {
                 return true;
             }
         }
@@ -479,7 +518,7 @@ class Game {
                 break;
             }
         }
-        if (this.check_bounary(row + count, col) || this.board[row + count][col] !== '將') {
+        if (this.check_bounary(row + count, col) || this.board[row + count][col][1] !== '將') {
             return true;
         }
         count = 1;
@@ -491,7 +530,7 @@ class Game {
                 break;
             }
         }   
-        if (this.check_bounary(row - count, col) || this.board[row - count][col] !== '帥') {
+        if (this.check_bounary(row - count, col) || this.board[row - count][col][1] !== '帥') {
             return true;
         }
         return false;
@@ -502,37 +541,37 @@ class Game {
     get_available_moves(row, col) {
         var available_moves = [];
 
-        if (this.board[row][col] === '兵'){
+        if (this.board[row][col][1] === '兵'){
             available_moves = this.get_available_moves_for_bing(row, col);
         }
-        else if (this.board[row][col] === '卒') {
+        else if (this.board[row][col][1] === '卒') {
             available_moves =  this.get_available_moves_for_zu(row, col);
         }
-        else if (this.board[row][col] === '炮'){
+        else if (this.board[row][col][1] === '炮'){
             available_moves  = this.get_available_moves_for_pao(row, col);
         }
-        else if (this.board[row][col] === '車'){
+        else if (this.board[row][col][1] === '車'){
             available_moves = this.get_available_moves_for_che(row, col);
         }
-        else if (this.board[row][col] === '馬'){
+        else if (this.board[row][col][1] === '馬'){
             available_moves = this.get_available_moves_for_ma(row, col);
         }
-        else if (this.board[row][col] === '象'){
+        else if (this.board[row][col][1] === '象'){
             available_moves = this.get_available_moves_for_xiangb(row, col);
         }
-        else if (this.board[row][col] === '相'){
+        else if (this.board[row][col][1] === '相'){
             available_moves = this.get_available_moves_for_xiangr(row, col);
         }
-        else if (this.board[row][col] === '士'){
+        else if (this.board[row][col][1] === '士'){
             available_moves = this.get_available_moves_for_shib(row, col);
         }
-        else if (this.board[row][col] === '仕'){
+        else if (this.board[row][col][1] === '仕'){
             available_moves = this.get_available_moves_for_shir(row, col);
         }
-        else if (this.board[row][col] === '將'){
+        else if (this.board[row][col][1] === '將'){
             available_moves = this.get_available_moves_for_jiang(row, col);
         }
-        else if (this.board[row][col] === '帥') {
+        else if (this.board[row][col][1] === '帥') {
             return this.get_available_moves_for_shuai(row, col);
         }
          if (this.moveable(row, col)) {
@@ -572,7 +611,7 @@ function is_same_color(piece1, piece2){
 }
 
 var game = new Game(document);
-set_board(game);
+set_board_by_game(game);
 function handleCellClick(event) {
     if (event.target.classList.contains('piece')) {
         const cellId = event.target.id;
@@ -583,24 +622,24 @@ function handleCellClick(event) {
             if (game.player === 'red'){
                 if(game.isPlayerTurn && cell.style.color === 'red')
                 {
-                cell.style.fontSize = '42px';
+                cell.style.fontSize = '47px';
                 game.choosing = [9-row, 8-col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'black')
                 {
-                    cell.style.fontSize = '42px';
+                    cell.style.fontSize = '47px';
                     game.choosing = [9 - row, 8 - col];
                 }
             }
             else{
                 if(game.isPlayerTurn && cell.style.color === 'black')
                 {
-                cell.style.fontSize = '42px';
+                cell.style.fontSize = '47px';
                 game.choosing = [row, col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'red')
                 {
-                    cell.style.fontSize = '42px';
+                    cell.style.fontSize = '47px';
                     game.choosing = [row, col];
                 }
             }
@@ -613,8 +652,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '33px';
-                cell.style.fontSize = '42px';
+                fpiece.style.fontSize = '37px';
+                cell.style.fontSize = '47px';
                 game.choosing = [9-row, 8-col];
                 return;
                 }
@@ -624,8 +663,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, transform(row, col));
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '33px';
-                    cell.style.fontSize = '33px';
+                    fpiece.style.fontSize = '37px';
+                    cell.style.fontSize = '37px';
                 }
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -638,8 +677,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '33px';
-                cell.style.fontSize = '42px';
+                fpiece.style.fontSize = '37px';
+                cell.style.fontSize = '47px';
                 game.choosing = [row, col];
                 return;
                 }
@@ -649,8 +688,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, [row, col]);
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '33px';
-                    cell.style.fontSize = '33px';
+                    fpiece.style.fontSize = '37px';
+                    cell.style.fontSize = '37px';
                 }
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -673,24 +712,24 @@ function handleCellClick(event) {
             if (game.player === 'red'){
                 if(game.isPlayerTurn && cell.style.color === 'red')
                 {
-                cell.style.fontSize = '42px';
+                cell.style.fontSize = '47px';
                 game.choosing = [9-row, 8-col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'black')
                 {
-                    cell.style.fontSize = '42px';
+                    cell.style.fontSize = '47px';
                     game.choosing = [9 - row, 8 - col];
                 }
             }
             else{
                 if(game.isPlayerTurn && cell.style.color === 'black')
                 {
-                cell.style.fontSize = '42px';
+                cell.style.fontSize = '47px';
                 game.choosing = [row, col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'red')
                 {
-                    cell.style.fontSize = '42px';
+                    cell.style.fontSize = '47px';
                     game.choosing = [row, col];
                 }
             }
@@ -703,8 +742,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '33px';
-                cell.style.fontSize = '42px';
+                fpiece.style.fontSize = '37px';
+                cell.style.fontSize = '47px';
                 game.choosing = [9-row, 8-col];
                 return;
                 }
@@ -714,8 +753,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, transform(row, col));
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '33px';
-                    cell.style.fontSize = '33px';
+                    fpiece.style.fontSize = '37px';
+                    cell.style.fontSize = '37px';
                 }
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -727,8 +766,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '33px';
-                cell.style.fontSize = '42px';
+                fpiece.style.fontSize = '37px';
+                cell.style.fontSize = '47px';
                 game.choosing = [row, col];
                 return;
                 }
@@ -738,8 +777,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, [row, col]);
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '33px';
-                    cell.style.fontSize = '33px';
+                    fpiece.style.fontSize = '37px';
+                    cell.style.fontSize = '37px';
                 }   
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -761,9 +800,7 @@ function handleCellClick(event) {
 function set_board(game){
     for (let i = 0; i < 10; i++) {
         for (let j = 0; j < 9; j++) {
-            piece = document.getElementById(i.toString() + '-' + j.toString()).textContent;
-            game.board[i][j] = piece;
-            if (piece !== '') {
+            if (game.board[i][j][1] !== '') {
                 a = document.getElementById(i.toString() + '-' + j.toString());
                 a.style.outline = '2px ridge rgba(175, 111, 8, 0.678)';
                 a.style.borderRadius = '90%';
@@ -913,19 +950,60 @@ function black_king_in_danger(){
     }
 }
 
+function set_board_by_game(game){
+    if(game.player === 'red'){
+        var reds = [];
+        for (let i=0; i<10; i++){
+            for (let j=0; j<9; j++){
+                if (game.board[i][j][1] !== ''){
+                    reds = transform(i, j);
+                    var piece = document.getElementById(reds[0].toString() + '-' + reds[1].toString());
+                    piece.textContent = game.board[i][j][1];
+                    piece.style.color = game.board[i][j][0];
+                    piece.style.outline = '2px ridge rgba(175, 111, 8, 0.678)';
+                    piece.style.borderRadius = '50%';
+                    piece.style.backgroundColor = 'rgba(175, 111, 8, 0.678)';
+                }
+                else{
+                    reds = transform(i, j);
+                    var piece = document.getElementById(reds[0].toString() + '-' + reds[1].toString());
+                    piece.textContent = '';
+                    piece.style.color = 'transparent';
+                    piece.style.outline = 'none';
+                    piece.style.borderRadius = 'none';
+                    piece.style.backgroundColor = 'transparent';
+                }
+            }
+        }
+    }
+        else{
+            for (let i=0; i<10; i++){
+                for (let j=0; j<9; j++){
+                    if (game.board[i][j][1] !== ''){
+                        var piece = document.getElementById(i.toString() + '-' + j.toString());
+                        piece.textContent = game.board[i][j][1];
+                        piece.style.color = game.board[i][j][0];
+                        piece.style.outline = '2px ridge rgba(175, 111, 8, 0.678)';
+                        piece.style.borderRadius = '50%';
+                        piece.style.backgroundColor = 'rgba(175, 111, 8, 0.678)';
+                    }
+                    else{
+                        var piece = document.getElementById(i.toString() + '-' + j.toString());
+                        piece.textContent = '';
+                        piece.style.color = 'transparent';
+                        piece.style.outline = 'none';
+                        piece.style.borderRadius = 'none';
+                        piece.style.backgroundColor = 'transparent';
+                    }
+                }
+            }
+        }
+    }
+
 function undo(){
     if (game.step === 0) {
         return;
     }
-    var eaten = game.undo();
-    if (game.player === 'red') {
-        eaten[1] = transform(eaten[1][0], eaten[1][1]);
-        eaten[2] = transform(eaten[2][0], eaten[2][1]);
-    }
-    var fplace = document.getElementById(eaten[2][0].toString() + '-' + eaten[2][1].toString());
-    var nplace = document.getElementById(eaten[1][0].toString() + '-' + eaten[1][1].toString());
-    piece_move(nplace, fplace);
-    if (eaten[0] !== '') {
-       nplace.textContent = eaten[0];
-    }
+    game.undo();
+    set_board_by_game(game);
 }
