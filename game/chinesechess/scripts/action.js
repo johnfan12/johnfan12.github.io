@@ -708,8 +708,11 @@ function handleCellClick(event) {
                     alert('似乎不可以下在這裏喔');
                 }
             }
-            if (red_king_in_danger() || black_king_in_danger()) {
-                setTimeout(function(){confirm('將軍！');}, 100);
+            if (red_king_in_danger()) {
+                setTimeout(function(){confirm('红方正在被將軍！');}, 100);
+            }
+            else if(black_king_in_danger()){
+                setTimeout(function(){confirm('黑方正在被將軍！');}, 100);
             }
             if (game.isGameOver) {
                 setTimeout(function(){confirm('游戲結束！');}, 100);
@@ -797,10 +800,11 @@ function handleCellClick(event) {
                     alert('似乎不可以下在這裏喔');
                 }
             }
-            if (red_king_in_danger() || black_king_in_danger()) {
-                //過一會消失的提示
-                setTimeout(function(){confirm('將軍！');}, 100);
-
+            if (red_king_in_danger()) {
+                setTimeout(function(){confirm('红方正在被將軍！');}, 100);
+            }
+            else if(black_king_in_danger()){
+                setTimeout(function(){confirm('黑方正在被將軍！');}, 100);
             }
             if (game.isGameOver) {
                 setTimeout(function(){confirm('游戲結束');}, 100);
@@ -862,7 +866,7 @@ function reset() {
 function red_king_in_danger(){
     for (let i=0; i<10; i++){
         for (let j=0; j<9; j++){
-            if (document.getElementById(i.toString() + '-' + j.toString()).style.color === 'black'){
+            if (game.board[i][j][0] === 'black'){
                 if(game.player === 'red'){
                     row = 9-i;
                     col = 8-j;
@@ -873,7 +877,7 @@ function red_king_in_danger(){
                 }
                 const moves = game.get_available_moves(row, col);
                 for (let i=0; i<moves.length; i++){
-                    if (game.board[moves[i][0]][moves[i][1]] === '帥'){
+                    if (game.board[moves[i][0]][moves[i][1]][1] === '帥'){
                         return true;
                     }
                 }
@@ -885,7 +889,7 @@ function red_king_in_danger(){
 function black_king_in_danger(){
     for (let i=0; i<10; i++){
         for (let j=0; j<9; j++){
-            if (document.getElementById(i.toString() + '-' + j.toString()).style.color === 'red'){
+            if (game.board[i][j][0] === 'red'){
                 if(game.player === 'red'){
                     row = 9-i;
                     col = 8-j;
@@ -896,7 +900,7 @@ function black_king_in_danger(){
                 }
                 const moves = game.get_available_moves(row, col);
                 for (let i=0; i<moves.length; i++){
-                    if (game.board[moves[i][0]][moves[i][1]] === '將'){
+                    if (game.board[moves[i][0]][moves[i][1]][1] === '將'){
                         return true;
                     }
                 }
