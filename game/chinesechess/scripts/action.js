@@ -635,24 +635,24 @@ function handleCellClick(event) {
             if (game.player === 'red'){
                 if(game.isPlayerTurn && cell.style.color === 'red')
                 {
-                cell.style.fontSize = '47px';
+                cell.style.fontSize = '43px';
                 game.choosing = [9-row, 8-col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'black')
                 {
-                    cell.style.fontSize = '47px';
+                    cell.style.fontSize = '43px';
                     game.choosing = [9 - row, 8 - col];
                 }
             }
             else{
                 if(game.isPlayerTurn && cell.style.color === 'black')
                 {
-                cell.style.fontSize = '47px';
+                cell.style.fontSize = '43px';
                 game.choosing = [row, col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'red')
                 {
-                    cell.style.fontSize = '47px';
+                    cell.style.fontSize = '43px';
                     game.choosing = [row, col];
                 }
             }
@@ -665,8 +665,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '37px';
-                cell.style.fontSize = '47px';
+                fpiece.style.fontSize = '34px';
+                cell.style.fontSize = '43px';
                 game.choosing = [9-row, 8-col];
                 return;
                 }
@@ -676,8 +676,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, transform(row, col));
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '37px';
-                    cell.style.fontSize = '37px';
+                    fpiece.style.fontSize = '34px';
+                    cell.style.fontSize = '34px';
                 }
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -690,8 +690,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '37px';
-                cell.style.fontSize = '47px';
+                fpiece.style.fontSize = '34px';
+                cell.style.fontSize = '43px';
                 game.choosing = [row, col];
                 return;
                 }
@@ -701,8 +701,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, [row, col]);
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '37px';
-                    cell.style.fontSize = '37px';
+                    fpiece.style.fontSize = '34px';
+                    cell.style.fontSize = '34px';
                 }
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -725,24 +725,24 @@ function handleCellClick(event) {
             if (game.player === 'red'){
                 if(game.isPlayerTurn && cell.style.color === 'red')
                 {
-                cell.style.fontSize = '47px';
+                cell.style.fontSize = '43px';
                 game.choosing = [9-row, 8-col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'black')
                 {
-                    cell.style.fontSize = '47px';
+                    cell.style.fontSize = '43px';
                     game.choosing = [9 - row, 8 - col];
                 }
             }
             else{
                 if(game.isPlayerTurn && cell.style.color === 'black')
                 {
-                cell.style.fontSize = '47px';
+                cell.style.fontSize = '43px';
                 game.choosing = [row, col];
                 }
                 else if (!game.isPlayerTurn && cell.style.color === 'red')
                 {
-                    cell.style.fontSize = '47px';
+                    cell.style.fontSize = '43px';
                     game.choosing = [row, col];
                 }
             }
@@ -755,8 +755,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '37px';
-                cell.style.fontSize = '47px';
+                fpiece.style.fontSize = '34px';
+                cell.style.fontSize = '43px';
                 game.choosing = [9-row, 8-col];
                 return;
                 }
@@ -766,8 +766,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, transform(row, col));
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '37px';
-                    cell.style.fontSize = '37px';
+                    fpiece.style.fontSize = '34px';
+                    cell.style.fontSize = '34px';
                 }
                 else{
                     alert('似乎不可以下在這裏喔');
@@ -779,8 +779,8 @@ function handleCellClick(event) {
                 if (fpiece.style.color === cell.style.color) 
                 {
                 game.choosing = null;
-                fpiece.style.fontSize = '37px';
-                cell.style.fontSize = '47px';
+                fpiece.style.fontSize = '34px';
+                cell.style.fontSize = '43px';
                 game.choosing = [row, col];
                 return;
                 }
@@ -790,8 +790,8 @@ function handleCellClick(event) {
                     game.makeMove(game.choosing, [row, col]);
                     piece_move(fpiece, cell);
                     game.choosing = null;
-                    fpiece.style.fontSize = '37px';
-                    cell.style.fontSize = '37px';
+                    fpiece.style.fontSize = '34px';
+                    cell.style.fontSize = '34px';
                 }   
                 else{
                     alert('似乎不可以下在這裏喔');
