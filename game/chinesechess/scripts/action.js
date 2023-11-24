@@ -1,6 +1,6 @@
 class Game {
     constructor(document) {
-        const chessPieces = [
+        this.chessPieces = [
             "車", "馬", "相", "仕", "帥", "仕", "相", "馬", "車",
             "", "", "", "", "", "", "", "", "",
             "", "炮", "", "", "", "", "", "炮", "",
@@ -17,11 +17,11 @@ class Game {
             for (let j = 0; j < 9; j++) {
                 if (i < 5) {
                     this.board[i][j] = new Array(2);
-                    this.board[i][j] = ['red', chessPieces[i * 9 + j]];
+                    this.board[i][j] = ['red', this.chessPieces[i * 9 + j]];
                 }
                 else {
                     this.board[i][j] = new Array(2);
-                    this.board[i][j] = ['black', chessPieces[i * 9 + j]];
+                    this.board[i][j] = ['black', this.chessPieces[i * 9 + j]];
                 }
         }
     }
@@ -67,28 +67,17 @@ class Game {
         
 
     reset() {
-        const chessPieces = [
-            "車", "馬", "相", "仕", "帥", "仕", "相", "馬", "車",
-            "", "", "", "", "", "", "", "", "",
-            "", "炮", "", "", "", "", "", "炮", "",
-            "兵", "", "兵", "", "兵", "", "兵", "", "兵",
-            "", "", "", "", "", "", "", "", "",
-            "", "", "", "", "", "", "", "", "",
-            "卒", "", "卒", "", "卒", "", "卒", "", "卒",
-            "", "炮", "", "", "", "", "", "炮", "",
-            "", "", "", "", "", "", "", "", "",
-            "車", "馬", "象", "士", "將", "士", "象", "馬", "車"];
         this.board = new Array(10);
         for (let i = 0; i < 10; i++) {
             this.board[i] = new Array(9);
             for (let j = 0; j < 9; j++) {
                 if (i < 5) {
                     this.board[i][j] = new Array(2);
-                    this.board[i][j] = ['red', chessPieces[i * 9 + j]];
+                    this.board[i][j] = ['red', this.chessPieces[i * 9 + j]];
                 }
                 else {
                     this.board[i][j] = new Array(2);
-                    this.board[i][j] = ['black', chessPieces[i * 9 + j]];
+                    this.board[i][j] = ['black', this.chessPieces[i * 9 + j]];
                 }
             }
         this.isPlayerTurn = true;
@@ -96,6 +85,30 @@ class Game {
         this.choosing = null;
     }
 }
+
+    whole_reset() {
+        this.board = new Array(10);
+        for (let i = 0; i < 10; i++) {
+            this.board[i] = new Array(9);
+            for (let j = 0; j < 9; j++) {
+                if (i < 5) {
+                    this.board[i][j] = new Array(2);
+                    this.board[i][j] = ['red', this.chessPieces[i * 9 + j]];
+                }
+                else {
+                    this.board[i][j] = new Array(2);
+                    this.board[i][j] = ['black', this.chessPieces[i * 9 + j]];
+                }
+            }
+        this.isPlayerTurn = true;
+        this.isGameOver = false;
+        this.choosing = null;
+        this.step = 0;
+        this.player = 'black';
+        this.recorder = [];
+    }
+}
+
 
     check_empty(row, col) {
         if (this.board[row][col][1] === '') {
@@ -841,66 +854,8 @@ function transform(row, col){
 }
 
 function reset() {
-    const chessPieces = [
-        "車", "馬", "相", "仕", "帥", "仕", "相", "馬", "車",
-        "", "", "", "", "", "", "", "", "",
-        "", "炮", "", "", "", "", "", "炮", "",
-        "兵", "", "兵", "", "兵", "", "兵", "", "兵",
-        "", "", "", "", "", "", "", "", "",
-        "", "", "", "", "", "", "", "", "",
-        "卒", "", "卒", "", "卒", "", "卒", "", "卒",
-        "", "炮", "", "", "", "", "", "炮", "",
-        "", "", "", "", "", "", "", "", "",
-        "車", "馬", "象", "士", "將", "士", "象", "馬", "車"
-    ];
-    const chessBoard = document.getElementById("chessBoard");
-    chessBoard.innerHTML = "";
-    var river = document.createElement("div");
-    river.id = "river";
-    river.className = "river";
-    river.innerHTML = "楚河   漢界";
-    chessBoard.appendChild(river);
-    for (let row = 0; row < 10; row++) {
-        for (let col = 0; col < 9; col++) {
-            const pieceIndex = row * 9 + col;
-            const piece = chessPieces[pieceIndex];
-            
-            var div = document.createElement("div");
-            div.id = `${row}-${col}`;
-            if((row === 1 && col === 4) || (row === 8 && col === 4)){
-                div.className = "x_piece";
-                div.innerHTML = piece;
-            }
-            else{
-                div.className = "piece";
-                div.innerHTML = piece;
-            }
-            if (piece !== "") {
-                div.style.color = (row < 5) ? "red" : "black";
-            }
-            chessBoard.appendChild(div);
-        }
-    }
-            game.reset();
-            set_board(game);
-            if (game.player === 'red') {
-                for (let i = 0; i < 9; i++) {
-                    for (let j = 0; j < 5; j++) {
-                        var fromhere = document.getElementById(j.toString() + '-' + i.toString());
-                        var tohere = document.getElementById((9 - j).toString() + '-' + (8 - i).toString());
-                        temp_role = tohere.textContent;
-                        temp_color = tohere.style.color;
-                        if (!(fromhere.textContent == '' && tohere.textContent == '')) {
-                            tohere.style.color = fromhere.style.color;
-                            tohere.textContent = fromhere.textContent;
-                            fromhere.textContent = temp_role;
-                            fromhere.style.color = temp_color;
-                        }
-                    }
-                }
-            }
-            else
-                return;
+    game.whole_reset();
+    set_board_by_game(game);
     
 }
 
