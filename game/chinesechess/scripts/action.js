@@ -867,15 +867,7 @@ function red_king_in_danger(){
     for (let i=0; i<10; i++){
         for (let j=0; j<9; j++){
             if (game.board[i][j][0] === 'black'){
-                if(game.player === 'red'){
-                    row = 9-i;
-                    col = 8-j;
-                }
-                else{
-                    row = i;
-                    col = j;
-                }
-                const moves = game.get_available_moves(row, col);
+                const moves = game.get_available_moves(i, j);
                 for (let i=0; i<moves.length; i++){
                     if (game.board[moves[i][0]][moves[i][1]][1] === '帥'){
                         return true;
@@ -890,15 +882,7 @@ function black_king_in_danger(){
     for (let i=0; i<10; i++){
         for (let j=0; j<9; j++){
             if (game.board[i][j][0] === 'red'){
-                if(game.player === 'red'){
-                    row = 9-i;
-                    col = 8-j;
-                }
-                else{
-                    row = i;
-                    col = j;
-                }
-                const moves = game.get_available_moves(row, col);
+                const moves = game.get_available_moves(i, j);
                 for (let i=0; i<moves.length; i++){
                     if (game.board[moves[i][0]][moves[i][1]][1] === '將'){
                         return true;
