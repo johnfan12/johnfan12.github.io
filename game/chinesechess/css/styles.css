@@ -3,8 +3,8 @@
     display: grid;
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(11, 1fr);
-    width: 540px;
-    height: 631px;
+    width: 505px;
+    height: 610px;
     border: 60px solid rgb(242, 237, 231);
     margin: auto;
     /* Add this line to center the board */
@@ -55,9 +55,8 @@
     grid-row: 6 / span 1;
     background-color: lightblue;
     text-align: center;
-    font-size: 35px;
-    height: 1px;
-    border: 50px solid lightblue;
+    font-size: 40px;
+    height: 60px;
     font-family: "隶书", "LiSu", serif;
     -webkit-user-select: none;
     user-select: none;
@@ -84,9 +83,9 @@
 .x_piece::after {
     content: "";
     position: absolute;
-    top: 55%;
-    left: -100%;
-    width: 300%;
+    top: 56%;
+    left: -91%;
+    width: 281%;
     height: 1px;
     border-top: 2px dashed rgb(150, 117, 64); /* 使用虛線，可以調整虛線顏色和樣式 */
     z-index: -1; 
