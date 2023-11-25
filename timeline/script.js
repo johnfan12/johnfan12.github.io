@@ -22,7 +22,7 @@ function time_format(time) {
   const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
 
-  return days + " 天 " + hours + " 时 " + minutes + " 分";  
+  return days + " 天 " + hours + " 时 " + minutes + " 分";
 }
 
 // 渲染事件
@@ -35,6 +35,10 @@ function renderEvent(event) {
   const diff_time = eventTime - currentTime;
   if (diff_time < 0) {
     li.textContent = event.title + ' ' + event.time + ' 已过期';
+  }
+  else if (diff_time <= 1000 * 60 * 60 * 24 * 2) {
+    li.textContent = '《' + event.title + "》"+ ' 时间: ' + event.time + ' 剩余时间: ' + time_format(diff_time);
+    li.style.color = "red";
   }
   else {
     li.textContent = '《' + event.title + "》"+ ' 时间: ' + event.time + ' 剩余时间: ' + time_format(diff_time);
@@ -78,6 +82,7 @@ function initCalendar() {
     Z3204030.01	供电技术	期末考试	时间未安排	时间未安排	地点未安排	地点未安排	正常	
     Z3204040.02	嵌入式系统及应用	期末考试	时间未安排	时间未安排	地点未安排	地点未安排	正常
 `;
+  let count = 0;
   const events = getEventList(data);
 
   // 排序
@@ -85,10 +90,28 @@ function initCalendar() {
   // 遍歷事件列表
   for (const event of events) {
     // 渲染事件
-    const li = renderEvent(event);
+    let li = renderEvent(event);
 
     // 添加到日程表
     document.getElementById("calendar").querySelector("ul").appendChild(li);
+    if (!li.textContent.includes("过期"))
+    count++;
+  }
+  
+  if (count == 0) {
+    const ci = document.createElement("li");
+    ci.textContent = "没有考试哦，放心玩吧！🎉🎉";
+    document.getElementById("calendar").querySelector("ul").appendChild(ci)
+}
+  else if (count < 3) {
+    const ci = document.createElement("li");
+    ci.textContent = "你只有" + count + "门考试，放心玩吧！";
+    document.getElementById("calendar").querySelector("ul").appendChild(ci);
+  }
+  else {
+    const ci = document.createElement("li");
+    ci.textContent = "😱😱还有" + count + "门考试，赶紧去复习吧！";
+    document.getElementById("calendar").querySelector("ul").appendChild(ci);
   }
 }
 
