@@ -14,11 +14,11 @@
 .board::before {
     content: '';
     position: absolute;
-    top: -5px; /* 這裡的值應該是邊框的寬度 */
-    right: 435px;
-    bottom: -5px;
-    left: 430px;
-    /* border: 80px solid rgb(237, 232, 224); */
+    top: -1%; /* 這裡的值應該是邊框的寬度 */
+    right: 28%;
+    bottom: -1%;
+    left: 28%;
+    /* border: 80px solid rgb(242, 237, 231); */
     border: 80px solid rgb(242, 237, 231);
     box-sizing: border-box;
     pointer-events: none; /* 這可以防止 .border-overlay 攔截滑鼠事件 */
@@ -77,10 +77,10 @@
 .river::before {
     content: '';
     position: absolute;
-    top: 320px; /* 這裡的值應該是邊框的寬度 */
-    right: 435px;
-    bottom: 320px;
-    left: 430px;
+    top: 43%; /* 這裡的值應該是邊框的寬度 */
+    right: 28%;
+    bottom: 44%;
+    left: 28%;
     border: 50px solid lightblue;
     box-sizing: border-box;
     pointer-events: none; /* 這可以防止 .border-overlay 攔截滑鼠事件 */
