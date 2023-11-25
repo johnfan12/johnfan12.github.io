@@ -5,7 +5,7 @@
     grid-template-rows: repeat(11, 1fr);
     width: 540px;
     height: 631px;
-    border: 50px solid rgb(242, 237, 231);
+    border: 60px solid rgb(242, 237, 231);
     margin: auto;
     /* Add this line to center the board */
     margin-top: 50px;
@@ -55,11 +55,9 @@
     grid-row: 6 / span 1;
     background-color: lightblue;
     text-align: center;
-    font-size: 40px;
+    font-size: 35px;
     height: 1px;
-    border: 40px solid lightblue;
-    border-top: 40px solid lightblue;
-    border-bottom: 40px solid lightblue;
+    border: 50px solid lightblue;
     font-family: "隶书", "LiSu", serif;
     -webkit-user-select: none;
     user-select: none;
