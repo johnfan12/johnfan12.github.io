@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+}
+
+li:not(.expired) {
+  margin-bottom: 10px;
+}
+
+.expired {
+  text-decoration: line-through;
+}
+
+
+</style>
+<head>
+  <meta charset="UTF-8">
+  <title>日程表</title>
+</head>
+<h1 style="text-align: center;">近期日程表</h1>
+<body style="background-color: azure;">
+  <div id="calendar">
+    <ul>
+      </ul>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
