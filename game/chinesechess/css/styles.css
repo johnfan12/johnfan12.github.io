@@ -4,12 +4,24 @@
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(11, 1fr);
     width: 540px;
-    height: 660px;
-    border: 50px solid rgb(237, 232, 224);
+    height: 631px;
     margin: auto;
     /* Add this line to center the board */
     margin-top: 50px;
     /* Adjust the margin-top as needed */
+}
+
+.board::before {
+    content: '';
+    position: absolute;
+    top: -5px; /* 這裡的值應該是邊框的寬度 */
+    right: 435px;
+    bottom: -5px;
+    left: 430px;
+    /* border: 80px solid rgb(237, 232, 224); */
+    border: 80px solid rgb(242, 237, 231);
+    box-sizing: border-box;
+    pointer-events: none; /* 這可以防止 .border-overlay 攔截滑鼠事件 */
 }
 
 /* 棋子样式 */
@@ -20,6 +32,8 @@
     font-size: 34px;
     font-weight: bold;
     border: none; /* Remove the outer border */
+    width: 55px;
+    height: 55px;
     position: relative;
     -webkit-user-select: none;
     user-select: none;
@@ -30,12 +44,12 @@
 .piece::after {
     content: "";
     position: absolute;
-    top: 50%;
-    left: -50%;
-    width: 200%;
+    top: 55%;
+    left: -60%;
+    width: 220%;
     height: 2px;
     background-color: rgb(150, 117, 64); /* Color of the cross */
-    z-index: -1; 
+    z-index: -3; 
 }
 
 .piece::before {
@@ -53,7 +67,24 @@
     background-color: lightblue;
     text-align: center;
     font-size: 40px;
+    height: 1px;
     font-family: "隶书", "LiSu", serif;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: -2;
+}
+
+.river::before {
+    content: '';
+    position: absolute;
+    top: 320px; /* 這裡的值應該是邊框的寬度 */
+    right: 435px;
+    bottom: 320px;
+    left: 430px;
+    border: 50px solid lightblue;
+    box-sizing: border-box;
+    pointer-events: none; /* 這可以防止 .border-overlay 攔截滑鼠事件 */
+    z-index: -3;
 }
 
 /* X棋子样式 */
@@ -64,6 +95,8 @@
     font-size: 34px;
     font-weight: bold;
     border: none; /* Remove the outer border */
+    width: 55px;
+    height: 55px;
     position: relative;
     -webkit-user-select: none;
     user-select: none;
@@ -74,21 +107,22 @@
 .x_piece::after {
     content: "";
     position: absolute;
-    top: 50%;
-    left: -92%;
-    width: 282%;
-    height: 2px;
-    background-color: rgb(150, 117, 64); /* Color of the cross */
+    top: 55%;
+    left: -100%;
+    width: 300%;
+    height: 1px;
+    border-top: 2px dashed rgb(150, 117, 64); /* 使用虛線，可以調整虛線顏色和樣式 */
     z-index: -1; 
 }
 
 .x_piece::before {
-    transform: translateY(-50%) rotate(45deg);
+    transform: translateY(-50%) rotate(44deg);
 }
 
 .x_piece::after {
-    transform: translateY(-50%) rotate(-45deg);
+    transform: translateY(-50%) rotate(-44deg);
 }
+
 
 
 .showwin {

@@ -1,5 +1,5 @@
 class Game {
-    constructor(document) {
+    constructor() {
         this.chessPieces = [
             "車", "馬", "相", "仕", "帥", "仕", "相", "馬", "車",
             "", "", "", "", "", "", "", "", "",
@@ -37,18 +37,19 @@ class Game {
         if (this.board[nplace[0]][nplace[1]][1] === '將' || this.board[nplace[0]][nplace[1]][1] === '帥') {
             this.isGameOver = true;
         }
-        var temp = this.board[fplace[0]][fplace[1]][1];
+        this.board[nplace[0]][nplace[1]][0] = this.board[fplace[0]][fplace[1]][0];
+        this.board[nplace[0]][nplace[1]][1] = this.board[fplace[0]][fplace[1]][1];
         this.board[fplace[0]][fplace[1]][1] = '';
-        this.board[nplace[0]][nplace[1]][1] = temp;
         this.isPlayerTurn = !this.isPlayerTurn;
         this.recorder[this.step] = [fplace, nplace];
         this.step++;
     }
 
     replay_move(fplace, nplace) {
-        var temp = this.board[fplace[0]][fplace[1]][1];
+        this.board[nplace[0]][nplace[1]][0] = this.board[fplace[0]][fplace[1]][0];
+        this.board[nplace[0]][nplace[1]][1] = this.board[fplace[0]][fplace[1]][1];
         this.board[fplace[0]][fplace[1]][1] = '';
-        this.board[nplace[0]][nplace[1]][1] = temp;
+        this.isPlayerTurn = !this.isPlayerTurn;
         this.isPlayerTurn = !this.isPlayerTurn;
     }
 
@@ -623,7 +624,7 @@ function is_same_color(piece1, piece2){
     return false;
 }
 
-var game = new Game(document);
+var game = new Game();
 set_board_by_game(game);
 function handleCellClick(event) {
     if (event.target.classList.contains('piece')) {
@@ -866,7 +867,7 @@ function reset() {
 function red_king_in_danger(){
     for (let i=0; i<10; i++){
         for (let j=0; j<9; j++){
-            if (game.board[i][j][0] === 'black'){
+            if (game.board[i][j][0] === 'black' && game.board[i][j][1] !== ''){
                 const moves = game.get_available_moves(i, j);
                 for (let i=0; i<moves.length; i++){
                     if (game.board[moves[i][0]][moves[i][1]][1] === '帥'){
@@ -876,12 +877,13 @@ function red_king_in_danger(){
             }
         }
     }
+    return false;
 }
 
 function black_king_in_danger(){
     for (let i=0; i<10; i++){
         for (let j=0; j<9; j++){
-            if (game.board[i][j][0] === 'red'){
+            if (game.board[i][j][0] === 'red' && game.board[i][j][1] !== ''){
                 const moves = game.get_available_moves(i, j);
                 for (let i=0; i<moves.length; i++){
                     if (game.board[moves[i][0]][moves[i][1]][1] === '將'){
@@ -891,6 +893,7 @@ function black_king_in_danger(){
             }
         }
     }
+    return false;
 }
 
 function set_board_by_game(game){
