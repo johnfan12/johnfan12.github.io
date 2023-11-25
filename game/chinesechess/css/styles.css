@@ -5,24 +5,13 @@
     grid-template-rows: repeat(11, 1fr);
     width: 540px;
     height: 631px;
+    border: 50px solid rgb(242, 237, 231);
     margin: auto;
     /* Add this line to center the board */
     margin-top: 50px;
     /* Adjust the margin-top as needed */
 }
 
-.board::before {
-    content: '';
-    position: absolute;
-    top: -1%; /* 這裡的值應該是邊框的寬度 */
-    right: 28%;
-    bottom: -1%;
-    left: 28%;
-    /* border: 80px solid rgb(242, 237, 231); */
-    border: 80px solid rgb(242, 237, 231);
-    box-sizing: border-box;
-    pointer-events: none; /* 這可以防止 .border-overlay 攔截滑鼠事件 */
-}
 
 /* 棋子样式 */
 .piece {
@@ -68,23 +57,13 @@
     text-align: center;
     font-size: 40px;
     height: 1px;
+    border: 40px solid lightblue;
+    border-top: 40px solid lightblue;
+    border-bottom: 40px solid lightblue;
     font-family: "隶书", "LiSu", serif;
     -webkit-user-select: none;
     user-select: none;
     z-index: -2;
-}
-
-.river::before {
-    content: '';
-    position: absolute;
-    top: 43%; /* 這裡的值應該是邊框的寬度 */
-    right: 28%;
-    bottom: 44%;
-    left: 28%;
-    border: 50px solid lightblue;
-    box-sizing: border-box;
-    pointer-events: none; /* 這可以防止 .border-overlay 攔截滑鼠事件 */
-    z-index: -3;
 }
 
 /* X棋子样式 */
