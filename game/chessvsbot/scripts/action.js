@@ -298,6 +298,7 @@ class Game {
         return available_moves;
     }
 
+
     get_available_moves_for_ma(row, col) {
         var available_moves = [];
         if (!this.check_bounary(row + 2, col + 1) && this.check_empty(row + 1, col)) {
@@ -752,14 +753,14 @@ class Game {
         var red_control_area = this.red_control_area();
         var red_area_score = 0;
         for (let i = 0; i < red_control_area.length; i++) {
-            if (red_control_area[i][0] < 5) {
-                red_area_score += 10;
+            if (red_control_area[i][0] < 4) {
+                red_area_score += 30;
             }
-            else if (red_control_area[i][0] < 8) {
-                red_area_score += 17;
+            else if (red_control_area[i][0] < 6) {
+                red_area_score += 60;
             }
             else {
-                red_area_score += 15;
+                red_area_score += 45;
             }
         }
         return red_area_score;
@@ -769,14 +770,14 @@ class Game {
         var black_control_area = this.black_control_area();
         var black_area_score = 0;
         for (let i = 0; i < black_control_area.length; i++) {
-            if (black_control_area[i][0] > 4) {
-                black_area_score += 10;
+            if (black_control_area[i][0] > 5) {
+                black_area_score += 30;
             }
-            else if (black_control_area[i][0] > 1) {
-                black_area_score += 17;
+            else if (black_control_area[i][0] > 3) {
+                black_area_score += 60;
             }
             else {
-                black_area_score += 15;
+                black_area_score += 45;
             }
         }
         return black_area_score;
@@ -788,8 +789,8 @@ class Game {
         var num_diff = red[0] - black[0] + red[1] - black[1] + red[2] - black[2] + red[3] - black[3] + red[4] - black[4] + red[5] - black[5];
         var red_can_eat = this.red_can_eat_which();
         var black_can_eat = this.black_can_eat_which();
-        var red_army_score = red[0] * 62 + red[1] * 80 + red[2] * 450 + red[3] * 58 + red[4] * 62 + red[5] * 62 ;
-        var black_army_score = black[0] * 62 + black[1] * 80 + black[2] * 450 + black[3] * 58 + black[4] * 62 + black[5] * 62;
+        var red_army_score = red[0] * 12 + red[1] * 30 + red[2] * 380 + red[3] * 20 + red[4] * 12 + red[5] * 12 ;
+        var black_army_score = black[0] * 12 + black[1] * 30 + black[2] * 380 + black[3] * 20 + black[4] * 12 + black[5] * 12;
         var red_action_score = red_can_eat[0] * 5 + red_can_eat[1] * 10 + red_can_eat[2] * 100 + red_can_eat[3] * 20 + red_can_eat[4] * 15 + red_can_eat[5] * 10 + red_can_eat[6] * 100;
         var black_action_score = black_can_eat[0] * 5 + black_can_eat[1] * 10 + black_can_eat[2] * 100 + black_can_eat[3] * 20 + black_can_eat[4] * 15 + black_can_eat[5] * 10 + black_can_eat[6] * 100;
         var red_area_score = this.red_area_score();
@@ -953,10 +954,6 @@ class Game {
                                 highest_win_rate = win_rate[0] + win_rate2[0] * 2;
                                 next_move = [[i, j], available_moves[k]];
                             }
-                            if (highest_win_rate - win_rate[0] - win_rate2[0] * 2 < 0.02 && Math.random() >= 0.5) {
-                                highest_win_rate = win_rate[0] + win_rate2[0] * 2;
-                                next_move = [[i, j], available_moves[k]];
-                            }
                             new_game = null;
                         }
                     }
@@ -989,10 +986,6 @@ class Game {
                             var win_rate = new_game.win_rate();
                             var win_rate2 = new_game.bot_self_attack();
                             if (win_rate[1] + win_rate2[1] * 2 > highest_win_rate) {
-                                highest_win_rate = win_rate[1] + win_rate2[1] * 2;
-                                next_move = [[i, j], available_moves[k]];
-                            }
-                            if (highest_win_rate - win_rate[1] - win_rate2[1] * 2 < 0.02 && Math.random() >= 0.5) {
                                 highest_win_rate = win_rate[1] + win_rate2[1] * 2;
                                 next_move = [[i, j], available_moves[k]];
                             }

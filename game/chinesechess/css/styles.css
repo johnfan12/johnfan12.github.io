@@ -4,7 +4,7 @@
     grid-template-columns: repeat(9, 1fr);
     grid-template-rows: repeat(11, 1fr);
     width: 505px;
-    height: 610px;
+    height: 560px;
     border: 60px solid rgb(242, 237, 231);
     margin: auto;
     /* Add this line to center the board */
@@ -51,16 +51,40 @@
 
 
 .river {
-    grid-column: 1 / span 9;
-    grid-row: 6 / span 1;
-    background-color: lightblue;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 40px;
-    height: 60px;
-    font-family: "隶书", "LiSu", serif;
+    font-weight: bold;
+    border: none; /* Remove the outer border */
+    width: 55px;
+    height: 10px;
+    position: relative;
     -webkit-user-select: none;
     user-select: none;
-    z-index: -2;
+    font-family: "隶书", "LiSu", serif;
+}
+
+.river::before {
+    content: "";
+    position: absolute;
+    top: -230%;
+    left: -61%;
+    width: 220%;
+    height: 30px;
+    background-color: lightblue; /* Color of the cross */
+    z-index: -2; 
+}
+
+.river::after {
+    content: "";
+    position: absolute;
+    top: 63%;
+    left: -60%;
+    width: 220%;
+    height: 32px;
+    background-color: lightblue; /* Color of the cross */
+    z-index: -2; 
 }
 
 /* X棋子样式 */
