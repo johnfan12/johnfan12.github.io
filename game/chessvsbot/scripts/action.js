@@ -752,14 +752,14 @@ class Game {
         var red_control_area = this.red_control_area();
         var red_area_score = 0;
         for (let i = 0; i < red_control_area.length; i++) {
-            if (red_control_area[i][0] < 3) {
-                red_area_score += 1;
+            if (red_control_area[i][0] < 5) {
+                red_area_score += 10;
             }
-            else if (red_control_area[i][0] < 7) {
+            else if (red_control_area[i][0] < 8) {
                 red_area_score += 17;
             }
             else {
-                red_area_score += 9;
+                red_area_score += 15;
             }
         }
         return red_area_score;
@@ -769,14 +769,14 @@ class Game {
         var black_control_area = this.black_control_area();
         var black_area_score = 0;
         for (let i = 0; i < black_control_area.length; i++) {
-            if (black_control_area[i][0] > 6) {
-                black_area_score += 1;
+            if (black_control_area[i][0] > 4) {
+                black_area_score += 10;
             }
-            else if (black_control_area[i][0] > 2) {
+            else if (black_control_area[i][0] > 1) {
                 black_area_score += 17;
             }
             else {
-                black_area_score += 9;
+                black_area_score += 15;
             }
         }
         return black_area_score;
@@ -788,26 +788,30 @@ class Game {
         var num_diff = red[0] - black[0] + red[1] - black[1] + red[2] - black[2] + red[3] - black[3] + red[4] - black[4] + red[5] - black[5];
         var red_can_eat = this.red_can_eat_which();
         var black_can_eat = this.black_can_eat_which();
-        var red_army_score = red[0] * 18 + red[1] * 58 + red[2] * 130 + red[3] * 58 + red[4] * 18 + red[5] * 18 ;
-        var black_army_score = black[0] * 18 + black[1] * 58 + black[2] * 130 + black[3] * 58 + black[4] * 18 + black[5] * 18;
-        var red_action_score = red_can_eat[0] + red_can_eat[1] * 2 + red_can_eat[2] * 5 + red_can_eat[3] * 4 + red_can_eat[4] * 3 + red_can_eat[5] * 2 + red_can_eat[6] * 5;
-        var black_action_score = black_can_eat[0] + black_can_eat[1] * 2 + black_can_eat[2] * 5 + black_can_eat[3] * 4 + black_can_eat[4] * 3 + black_can_eat[5] * 2 + black_can_eat[6] * 5;
+        var red_army_score = red[0] * 62 + red[1] * 80 + red[2] * 450 + red[3] * 58 + red[4] * 62 + red[5] * 62 ;
+        var black_army_score = black[0] * 62 + black[1] * 80 + black[2] * 450 + black[3] * 58 + black[4] * 62 + black[5] * 62;
+        var red_action_score = red_can_eat[0] * 5 + red_can_eat[1] * 10 + red_can_eat[2] * 100 + red_can_eat[3] * 20 + red_can_eat[4] * 15 + red_can_eat[5] * 10 + red_can_eat[6] * 100;
+        var black_action_score = black_can_eat[0] * 5 + black_can_eat[1] * 10 + black_can_eat[2] * 100 + black_can_eat[3] * 20 + black_can_eat[4] * 15 + black_can_eat[5] * 10 + black_can_eat[6] * 100;
         var red_area_score = this.red_area_score();
         var black_area_score = this.black_area_score();
-        var red_score = red_army_score + red_action_score + red_area_score + num_diff * 5;
-        var black_score = black_army_score + black_action_score + black_area_score - num_diff * 5;
-        return [red_score, black_score];
+        var red_score = red_army_score + red_action_score + red_area_score;
+        var black_score = black_army_score + black_action_score + black_area_score;
+        var red_win_rate = red_score / (red_score + black_score);
+        var black_win_rate = black_score / (red_score + black_score);
+        return [red_win_rate, black_win_rate];
     }
 
     fast_think(){
         var red = this.get_red_piece_numbers();
         var black = this.get_black_piece_numbers();
         var num_diff = red[0] - black[0] + red[1] - black[1] + red[2] - black[2] + red[3] - black[3] + red[4] - black[4] + red[5] - black[5];
-        var red_army_score = red[0] * 12 + red[1] * 22 + red[2] * 40 + red[3] * 22 + red[4] * 12 + red[5] * 12 ;
-        var black_army_score = black[0] * 12 + black[1] * 22 + black[2] * 40 + black[3] * 22 + black[4] * 12 + black[5] * 12;
-        var red_score = red_army_score + num_diff * 15;
-        var black_score = black_army_score - num_diff * 15;
-        return [red_score, black_score];
+        var red_army_score = red[0] * 62 + red[1] * 100 + red[2] * 450 + red[3] * 60 + red[4] * 62 + red[5] * 62 ;
+        var black_army_score = black[0] * 62 + black[1] * 100 + black[2] * 450 + black[3] * 60 + black[4] * 62 + black[5] * 62;
+        var red_score = red_army_score + num_diff * 450;
+        var black_score = black_army_score - num_diff * 450;
+        var red_win_rate = red_score / (red_score + black_score);
+        var black_win_rate = black_score / (red_score + black_score);
+        return [red_win_rate, black_win_rate];
     }
 
     red_king_in_danger() {
@@ -847,7 +851,11 @@ class Game {
             this.player = 'black';
         else
             this.player = 'red';
-        this.normal_bot_move();
+        var next_move = this.normal_bot_move();
+        if (next_move.length === 0) {
+            return [0, 0];
+        }
+        this.makeMove(next_move[0], next_move[1]);
         let win = this.fast_think();
         return win;
     }
@@ -856,7 +864,7 @@ class Game {
         if (this.player === 'black') {
             var available_moves = [];
             var next_move = [];
-            var highest_win_rate = 0;
+            var highest_win_rate = Number.MIN_SAFE_INTEGER;
             for (var i = 0; i < 10; i++) {
                 for (var j = 0; j < 9; j++) {
                     if (this.board[i][j][0] === 'red' && this.board[i][j][1] !== '') {
@@ -868,18 +876,15 @@ class Game {
                             if (this.board[available_moves[k][0]][available_moves[k][1]][1] === '將') {
                                 return [[i, j], available_moves[k]];
                             }
-                            var new_game = this.copy();
-                            new_game.makeMove([i, j], available_moves[k]);
-                            if (new_game.red_king_in_danger()) {
-                                new_game = null;
+                            this.makeMove([i, j], available_moves[k]);
+                            if (this.red_king_in_danger()) {
                                 continue;
                             }
-                            var win_rate = new_game.fast_think();
+                            var win_rate = this.fast_think();
                             if (win_rate[1] > highest_win_rate) {
                                 highest_win_rate = win_rate[1];
                                 next_move = [[i, j], available_moves[k]];
                             }
-                            new_game = null;
                         }
                     }
                 }
@@ -890,7 +895,7 @@ class Game {
             var available_moves = [];
             var next_move = [];
             var highest_win_rate;
-            highest_win_rate = 0;
+            highest_win_rate =  Number.MIN_SAFE_INTEGER;
             for (let i = 0; i < 10; i++) {
                 for (let j = 0; j < 9; j++) {
                     if (this.board[i][j][0] === 'black' && this.board[i][j][1] !== '') {
@@ -902,18 +907,15 @@ class Game {
                             if (this.board[available_moves[k][0]][available_moves[k][1]][1] === '帥') {
                                 return [[i, j], available_moves[k]];
                             }
-                            var new_game = this.copy();
-                            new_game.makeMove([i, j], available_moves[k]);
-                            if (new_game.black_king_in_danger()) {
-                                new_game = null;
+                            this.makeMove([i, j], available_moves[k]);
+                            if (this.black_king_in_danger()) {
                                 continue;
                             }
-                            var win_rate = new_game.fast_think();
-                            if (win_rate[1] > highest_win_rate) {
-                                highest_win_rate = win_rate[1];
+                            var win_rate = this.fast_think();
+                            if (win_rate[0] > highest_win_rate) {
+                                highest_win_rate = win_rate[0];
                                 next_move = [[i, j], available_moves[k]];
                             }
-                            new_game = null;
                         }
                     }
                 }
@@ -927,7 +929,7 @@ class Game {
         if (this.player === 'black') {
             var available_moves = [];
             var next_move = [];
-            var highest_win_rate = 0;
+            var highest_win_rate = Number.MIN_SAFE_INTEGER;
             for (var i = 0; i < 10; i++) {
                 for (var j = 0; j < 9; j++) {
                     if (this.board[i][j][0] === 'red' && this.board[i][j][1] !== '') {
@@ -947,12 +949,12 @@ class Game {
                             }
                             var win_rate = new_game.win_rate();
                             var win_rate2 = new_game.bot_self_attack();
-                            if (win_rate[0] + win_rate2[0] > highest_win_rate) {
-                                highest_win_rate = win_rate[0] + win_rate2[0];
+                            if (win_rate[0] + win_rate2[0] * 2 > highest_win_rate) {
+                                highest_win_rate = win_rate[0] + win_rate2[0] * 2;
                                 next_move = [[i, j], available_moves[k]];
                             }
-                            if (highest_win_rate - win_rate[0] - win_rate2[0] < 5 && Math.random() >= 0.5) {
-                                highest_win_rate = win_rate[0] + win_rate2[0];
+                            if (highest_win_rate - win_rate[0] - win_rate2[0] * 2 < 0.02 && Math.random() >= 0.5) {
+                                highest_win_rate = win_rate[0] + win_rate2[0] * 2;
                                 next_move = [[i, j], available_moves[k]];
                             }
                             new_game = null;
@@ -966,7 +968,7 @@ class Game {
             var available_moves = [];
             var next_move = [];
             var highest_win_rate;
-            highest_win_rate = 0;
+            highest_win_rate = Number.MIN_SAFE_INTEGER;
             for (let i = 0; i < 10; i++) {
                 for (let j = 0; j < 9; j++) {
                     if (this.board[i][j][0] === 'black' && this.board[i][j][1] !== '') {
@@ -986,12 +988,12 @@ class Game {
                             }
                             var win_rate = new_game.win_rate();
                             var win_rate2 = new_game.bot_self_attack();
-                            if (win_rate[0] + win_rate2[0] > highest_win_rate) {
-                                highest_win_rate = win_rate[0] + win_rate2[0];
+                            if (win_rate[1] + win_rate2[1] * 2 > highest_win_rate) {
+                                highest_win_rate = win_rate[1] + win_rate2[1] * 2;
                                 next_move = [[i, j], available_moves[k]];
                             }
-                            if (highest_win_rate - win_rate[0] - win_rate2[0] < 5 && Math.random() >= 0.5) {
-                                highest_win_rate = win_rate[0] + win_rate2[0];
+                            if (highest_win_rate - win_rate[1] - win_rate2[1] * 2 < 0.02 && Math.random() >= 0.5) {
+                                highest_win_rate = win_rate[1] + win_rate2[1] * 2;
                                 next_move = [[i, j], available_moves[k]];
                             }
                             new_game = null;
