@@ -626,6 +626,27 @@ class Game {
         return [zu, pao, che, ma, xiang, shi];
     }
 
+    get_jiang_available_moves() {
+        for (let i = 7; i < 10; i++) {
+            for (let j = 3; j < 6; j++) {
+                if (this.board[i][j][1] === '將') {
+                    return this.get_available_moves(i, j);
+                }
+            }
+        }
+
+    }
+
+    get_shuai_available_moves() {
+        for (let i = 0; i < 3; i++) {
+            for (let j = 3; j < 6; j++) {
+                if (this.board[i][j][1] === '帥') {
+                    return this.get_available_moves(i, j);
+                }
+            }
+        }
+    }
+
     red_can_eat_which() {
         var available_moves = [];
         var zu = 0;
@@ -635,6 +656,9 @@ class Game {
         var xiang = 0;
         var shi = 0;
         var jiang = 0;
+        var win_score = 0;
+        var jiang_available_moves = this.get_jiang_available_moves();
+        win_score = 4 - jiang_available_moves.length;
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < 9; j++) {
                 if (this.board[i][j][0] === 'red' && this.board[i][j][1] !== '') {
@@ -662,12 +686,15 @@ class Game {
                             else if (this.board[available_moves[k][0]][available_moves[k][1]][1] === '將') {
                                 jiang++;
                             }
+                            else if(available_moves[k] in jiang_available_moves){
+                                win_score++;
+                            }
                         }
                     }
                 }
             }
         }
-        return [zu, pao, che, ma, xiang, shi, jiang];
+        return [zu, pao, che, ma, xiang, shi, jiang, win_score];
     }
 
     black_can_eat_which() {
@@ -679,6 +706,9 @@ class Game {
         var xiang = 0;
         var shi = 0;
         var shuai = 0;
+        var win_score = 0;
+        var shuai_available_moves = this.get_shuai_available_moves();
+        win_score = 4 - shuai_available_moves.length;
         for (let i = 0; i < 10; i++) {
             for (let j = 0; j < 9; j++) {
                 if (this.board[i][j][0] === 'black' && this.board[i][j][1] !== '') {
@@ -706,12 +736,15 @@ class Game {
                             else if (this.board[available_moves[k][0]][available_moves[k][1]][1] === '帥') {
                                 shuai++;
                             }
+                            else if(available_moves[k] in shuai_available_moves){
+                                win_score++;
+                            }
                         }
                     }
                 }
             }
         }
-        return [bing, pao, che, ma, xiang, shi, shuai];
+        return [bing, pao, che, ma, xiang, shi, shuai, win_score];
     }
 
     red_control_area() {
@@ -721,6 +754,7 @@ class Game {
             for (let j = 0; j < 9; j++) {
                 if (this.board[i][j][0] === 'red' && this.board[i][j][1] !== '' && this.board[i][j][1] !== '炮') {
                     available_moves = this.get_available_moves(i, j);
+                    control_area.push([i, j]);
                     for (let k = 0; k < available_moves.length; k++) {
                             if (!control_area.includes(available_moves[k])) {
                                 if(this.board[available_moves[k][0]][available_moves[k][1]][1] !== '炮')
@@ -740,6 +774,7 @@ class Game {
             for (let j = 0; j < 9; j++) {
                 if (this.board[i][j][0] === 'black' && this.board[i][j][1] !== '' && this.board[i][j][1] !== '炮') {
                     available_moves = this.get_available_moves(i, j);
+                    control_area.push([i, j]);
                     for (let k = 0; k < available_moves.length; k++) {
                             if (!control_area.includes(available_moves[k])) {
                                 control_area.push(available_moves[k]);
@@ -768,6 +803,23 @@ class Game {
         return red_area_score;
     }
 
+    red_defense_score(){
+        var red_control_area = this.red_control_area();
+        var red_defense_score = 0;
+        for (let i = 0; i < red_control_area.length; i++) {
+            if (red_control_area[i][0] < 4) {
+                red_defense_score += 50;
+            }
+            else if (red_control_area[i][0] < 6) {
+                red_defense_score += 20;
+            }
+            else {
+                red_defense_score += 10;
+            }
+        }
+        return red_defense_score;
+    }
+
     black_area_score() {
         var black_control_area = this.black_control_area();
         var black_area_score = 0;
@@ -785,36 +837,68 @@ class Game {
         return black_area_score;
     }
 
+    black_defense_score(){
+        var black_control_area = this.black_control_area();
+        var black_defense_score = 0;
+        for (let i = 0; i < black_control_area.length; i++) {
+            if (black_control_area[i][0] > 5) {
+                black_defense_score += 50;
+            }
+            else if (black_control_area[i][0] > 3) {
+                black_defense_score += 20;
+            }
+            else {
+                black_defense_score += 10;
+            }
+        }
+        return black_defense_score;
+    }
+
     win_rate() {
         var red = this.get_red_piece_numbers();
         var black = this.get_black_piece_numbers();
         var red_can_eat = this.red_can_eat_which();
         var black_can_eat = this.black_can_eat_which();
-        if(this.fast_think()[0] > 0.95 || this.fast_think()[1] > 0.95){
+        if(this.fast_think()[0] > 0.91){
+            var red_area_score = this.red_area_score();
+            var black_area_score = this.black_defense_score();
+            var red_army_score = red[0] * 12 + red[1] * 100 + red[2] * 380 + red[3] * 90 + red[4] * 12 + red[5] * 12 ;
+            var black_army_score = black[0] * 12 + black[1] * 100 + black[2] * 380 + black[3] * 90 + black[4] * 12 + black[5] * 12;
+            var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 600 + red_can_eat[7] * 600;
+            var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 600 ;
+            var red_score = red_army_score + red_action_score + red_area_score;
+            var black_score = black_army_score + black_action_score + black_area_score;
+            //var red_win_rate = red_score / (red_score + black_score);
+            //var black_win_rate = black_score / (red_score + black_score);
+        }
+        else if(this.fast_think()[1] > 0.91){
+            var red_area_score = this.red_defense_score();
+            var black_area_score = this.black_area_score();
             var red_army_score = red[0] * 12 + red[1] * 100 + red[2] * 380 + red[3] * 90 + red[4] * 12 + red[5] * 12 ;
             var black_army_score = black[0] * 12 + black[1] * 100 + black[2] * 380 + black[3] * 90 + black[4] * 12 + black[5] * 12;
             var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 600;
-            var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 600;
-            var red_area_score = this.red_area_score();
-            var black_area_score = this.black_area_score();
+            var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 600 + black_can_eat[7] * 600;
             var red_score = red_army_score + red_action_score + red_area_score;
             var black_score = black_army_score + black_action_score + black_area_score;
-            var red_win_rate = red_score / (red_score + black_score);
-            var black_win_rate = black_score / (red_score + black_score);
+            //var red_win_rate = red_score / (red_score + black_score);
+            //var black_win_rate = black_score / (red_score + black_score);
         }
         else{
-        var red_army_score = red[0] * 12 + red[1] * 100 + red[2] * 380 + red[3] * 90 + red[4] * 12 + red[5] * 12 ;
-        var black_army_score = black[0] * 12 + black[1] * 100 + black[2] * 380 + black[3] * 90 + black[4] * 12 + black[5] * 12;
-        var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 100;
-        var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 100;
-        var red_area_score = this.red_area_score();
-        var black_area_score = this.black_area_score();
-        var red_score = red_army_score + red_action_score + red_area_score;
-        var black_score = black_army_score + black_action_score + black_area_score;
-        var red_win_rate = red_score / (red_score + black_score);
-        var black_win_rate = black_score / (red_score + black_score);
+            var red_area_score = this.red_area_score();
+            var black_area_score = this.black_area_score();
+            var red_army_score = red[0] * 12 + red[1] * 100 + red[2] * 380 + red[3] * 90 + red[4] * 12 + red[5] * 12 ;
+            var black_army_score = black[0] * 12 + black[1] * 100 + black[2] * 380 + black[3] * 90 + black[4] * 12 + black[5] * 12;
+            var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 100;
+            var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 100;
+            var red_score = red_army_score + red_action_score + red_area_score;
+            var black_score = black_army_score + black_action_score + black_area_score;
+            //var red_win_rate = red_score / (red_score + black_score);
+            //var black_win_rate = black_score / (red_score + black_score);
         }
-        return [red_win_rate, black_win_rate];
+        let socre_diff = red_score - black_score;
+        let winRate = 1 / (1 + Math.exp(-socre_diff / 450));
+        return [winRate, 1 - winRate];
+        // return [red_win_rate, black_win_rate];
     }
 
     fast_think(){
@@ -942,7 +1026,7 @@ class Game {
     normal_bot_move(){
         if (this.player === 'black') {
             var available_moves = [];
-            var next_move = [];
+            var next_move = [[]];
             var highest_win_rate = -1;
             for (var i = 0; i < 10; i++) {
                 for (var j = 0; j < 9; j++) {
@@ -962,20 +1046,24 @@ class Game {
                                 continue;
                             }
                             var win_rate = new_game.fast_think();
-                            if (win_rate[0] > highest_win_rate) {
+                            if (win_rate[0] > highest_win_rate) { 
                                 highest_win_rate = win_rate[0];
-                                next_move = [[i, j], available_moves[k]];
+                                next_move = [[[i, j], available_moves[k]]];
+                            }
+                            else if(win_rate[0] === highest_win_rate){
+                                next_move.push([[i, j], available_moves[k]]);
                             }
                             new_game = null;
                         }
                     }
                 }
             }
-            return next_move;
+            var result = Math.floor(Math.random() * next_move.length);
+            return next_move[result];
         }
         else {
             var available_moves = [];
-            var next_move = [];
+            var next_move = [[]];
             var highest_win_rate;
             highest_win_rate = -1;
             for (let i = 0; i < 10; i++) {
@@ -998,14 +1086,18 @@ class Game {
                             var win_rate = new_game.fast_think();
                             if (win_rate[1] > highest_win_rate) {
                                 highest_win_rate = win_rate[1];
-                                next_move = [[i, j], available_moves[k]];
+                                next_move = [[[i, j], available_moves[k]]];
+                            }
+                            else if(win_rate[1] === highest_win_rate){
+                                next_move.push([[i, j], available_moves[k]]);
                             }
                             new_game = null;
                         }
                     }
                 }
             }
-            return next_move;
+            var result = Math.floor(Math.random() * next_move.length);
+            return next_move[result];
         }
     }
 
@@ -1024,7 +1116,7 @@ class Game {
             }
             else{
             var available_moves = [];
-            var next_move = [];
+            var next_move = [[]];
             var highest_win_rate = Number.MIN_SAFE_INTEGER;
             for (var i = 0; i < 10; i++) {
                 for (var j = 0; j < 9; j++) {
@@ -1044,17 +1136,25 @@ class Game {
                                 continue;
                             }
                             var win_rate = new_game.win_rate();
+                            if (this.step > 10 && [[i, j], available_moves[k]] == this.recorder[this.step - 5]) {
+                                new_game = null;
+                                continue;
+                            }
                             var win_rate2 = new_game.bot_self_attack();
                             if (win_rate[0] + win_rate2[0] * 4 > highest_win_rate) {
                                 highest_win_rate = win_rate[0] + win_rate2[0] * 4;
-                                next_move = [[i, j], available_moves[k]];
+                                next_move = [[[i, j], available_moves[k]]];
+                            }
+                            else if(win_rate[0] + win_rate2[0] * 4 === highest_win_rate){
+                                next_move.push[[i, j], available_moves[k]]
                             }
                             new_game = null;
                         }
                     }
                 }
             }
-            return next_move;
+            var result = Math.floor(Math.random() * next_move.length);
+            return next_move[result];
         }
         }
         else {
@@ -1076,7 +1176,7 @@ class Game {
             }
             else{
             var available_moves = [];
-            var next_move = [];
+            var next_move = [[]];
             var highest_win_rate;
             highest_win_rate = Number.MIN_SAFE_INTEGER;
             for (let i = 0; i < 10; i++) {
@@ -1097,17 +1197,25 @@ class Game {
                                 continue;
                             }
                             var win_rate = new_game.win_rate();
+                            if (this.step > 10  && [[i, j], available_moves[k]] == this.recorder[this.step - 5]) {
+                                new_game = null;
+                                continue;
+                            }
                             var win_rate2 = new_game.bot_self_attack();
                             if (win_rate[1] + win_rate2[1] * 4 > highest_win_rate) {
                                 highest_win_rate = win_rate[1] + win_rate2[1] * 4;
-                                next_move = [[i, j], available_moves[k]];
+                                next_move = [[[i, j], available_moves[k]]];
+                            }
+                            else if(win_rate[1] + win_rate2[1] * 4 === highest_win_rate){
+                                next_move.push[[i, j], available_moves[k]]
                             }
                             new_game = null;
                         }
                     }
                 }
             }
-            return next_move;
+            var result = Math.floor(Math.random() * next_move.length);
+            return next_move[result];
         }
         }
     }
