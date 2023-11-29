@@ -1011,8 +1011,14 @@ class Game {
 
     bot_move() {
         if (this.player === 'black') {
-            if(this.step === 0 || this.step === 2){
+            if(this.step === 0){
                 var randomindex = Math.floor(Math.random() * 7);
+                var next_move = this.red_start_moves[randomindex];
+                return next_move;
+            }
+            else if(this.step === 2)
+            {
+                var randomindex = Math.floor(Math.random() * 4) + 7 ;
                 var next_move = this.red_start_moves[randomindex];
                 return next_move;
             }
