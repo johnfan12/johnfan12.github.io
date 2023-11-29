@@ -51,7 +51,6 @@ class Game {
         this.board[nplace[0]][nplace[1]][0] = this.board[fplace[0]][fplace[1]][0];
         this.board[nplace[0]][nplace[1]][1] = this.board[fplace[0]][fplace[1]][1];
         this.board[fplace[0]][fplace[1]][1] = '';
-        this.isPlayerTurn = !this.isPlayerTurn;
     }
 
     undo() {
@@ -59,10 +58,10 @@ class Game {
             return;
         }
         this.reset();
-        for (let i = 0; i < this.step - 1; i++) {
+        for (let i = 0; i < this.step - 2; i++) {
             this.replay_move(this.recorder[i][0], this.recorder[i][1]);
         }
-        this.step--;
+        this.step-=2;
     }
 
 
@@ -791,13 +790,13 @@ class Game {
         var red_area_score = 0;
         for (let i = 0; i < red_control_area.length; i++) {
             if (red_control_area[i][0] < 4) {
-                red_area_score += 20;
+                red_area_score += 12;
             }
             else if (red_control_area[i][0] < 6) {
-                red_area_score += 50;
+                red_area_score += 30;
             }
             else {
-                red_area_score += 45;
+                red_area_score += 27;
             }
         }
         return red_area_score;
@@ -808,13 +807,13 @@ class Game {
         var red_defense_score = 0;
         for (let i = 0; i < red_control_area.length; i++) {
             if (red_control_area[i][0] < 4) {
-                red_defense_score += 50;
+                red_defense_score += 12;
             }
             else if (red_control_area[i][0] < 6) {
-                red_defense_score += 20;
+                red_defense_score += 30;
             }
             else {
-                red_defense_score += 10;
+                red_defense_score += 27;
             }
         }
         return red_defense_score;
@@ -864,7 +863,7 @@ class Game {
             var black_area_score = this.black_defense_score();
             var red_army_score = red[0] * 12 + red[1] * 100 + red[2] * 380 + red[3] * 90 + red[4] * 12 + red[5] * 12 ;
             var black_army_score = black[0] * 12 + black[1] * 100 + black[2] * 380 + black[3] * 90 + black[4] * 12 + black[5] * 12;
-            var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 600 + red_can_eat[7] * 600;
+            var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 600 + red_can_eat[7] * 750;
             var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 600 ;
             var red_score = red_army_score + red_action_score + red_area_score;
             var black_score = black_army_score + black_action_score + black_area_score;
@@ -877,7 +876,7 @@ class Game {
             var red_army_score = red[0] * 12 + red[1] * 100 + red[2] * 380 + red[3] * 90 + red[4] * 12 + red[5] * 12 ;
             var black_army_score = black[0] * 12 + black[1] * 100 + black[2] * 380 + black[3] * 90 + black[4] * 12 + black[5] * 12;
             var red_action_score = red_can_eat[0] * 10 + red_can_eat[1] * 80 + red_can_eat[2] * 200 + red_can_eat[3] * 80 + red_can_eat[4] * 60 + red_can_eat[5] * 40 + red_can_eat[6] * 600;
-            var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 600 + black_can_eat[7] * 600;
+            var black_action_score = black_can_eat[0] * 10 + black_can_eat[1] * 80 + black_can_eat[2] * 200 + black_can_eat[3] * 80 + black_can_eat[4] * 60 + black_can_eat[5] * 40 + black_can_eat[6] * 600 + black_can_eat[7] * 750;
             var red_score = red_army_score + red_action_score + red_area_score;
             var black_score = black_army_score + black_action_score + black_area_score;
             //var red_win_rate = red_score / (red_score + black_score);
@@ -904,8 +903,8 @@ class Game {
     fast_think(){
         var red = this.get_red_piece_numbers();
         var black = this.get_black_piece_numbers();
-        var red_army_score = red[0] * 1 + red[1] * 5 + red[2] * 20 + red[3] * 5 + red[4] * 3 + red[5] * 2;
-        var black_army_score = black[0] * 1 + black[1] * 5 + black[2] * 20 + black[3] * 5 + black[4] * 3 + black[5] * 2;
+        var red_army_score = red[0] * 1 + red[1] * 7 + red[2] * 30 + red[3] * 5 + red[4] * 3 + red[5] * 2;
+        var black_army_score = black[0] * 1 + black[1] * 7 + black[2] * 30 + black[3] * 5 + black[4] * 3 + black[5] * 2;
         let scoreDiff = red_army_score - black_army_score
         let winRate = 1 / (1 + Math.exp(-scoreDiff / 10));
 
@@ -951,7 +950,7 @@ class Game {
             this.player = 'red';
         var next_move = this.normal_bot_move();
         if (next_move.length === 0) {
-            console.log('may be someting wrong')
+            console.log('baby bot win!')
             return [0, 0];
         }
         this.makeMove(next_move[0], next_move[1]);
@@ -1136,16 +1135,21 @@ class Game {
                                 continue;
                             }
                             var win_rate = new_game.win_rate();
-                            if (this.step > 10 && [[i, j], available_moves[k]] == this.recorder[this.step - 5]) {
+                            let last_4 = this.recorder[this.step - 4];
+                            if (this.step > 10 && i == last_4[0][0] && j == last_4[0][1] && available_moves[k][0] == last_4[1][0] && available_moves[k][1] == last_4[1][1]) {
                                 new_game = null;
                                 continue;
                             }
                             var win_rate2 = new_game.bot_self_attack();
-                            if (win_rate[0] + win_rate2[0] * 4 > highest_win_rate) {
-                                highest_win_rate = win_rate[0] + win_rate2[0] * 4;
+                            if (win_rate2[0] === 0 && win_rate2[1] === 0){
+                                new_game = null;
+                                return [[i, j], available_moves[k]];
+                            }
+                            if (win_rate[0] + win_rate2[0] * 8 > highest_win_rate) {
+                                highest_win_rate = win_rate[0] + win_rate2[0] * 8;
                                 next_move = [[[i, j], available_moves[k]]];
                             }
-                            else if(win_rate[0] + win_rate2[0] * 4 === highest_win_rate){
+                            else if(win_rate[0] + win_rate2[0] * 8 === highest_win_rate){
                                 next_move.push[[i, j], available_moves[k]]
                             }
                             new_game = null;
@@ -1197,16 +1201,21 @@ class Game {
                                 continue;
                             }
                             var win_rate = new_game.win_rate();
-                            if (this.step > 10  && [[i, j], available_moves[k]] == this.recorder[this.step - 5]) {
+                            let last_4 = this.recorder[this.step - 4];
+                            if (this.step > 10 && i == last_4[0][0] && j == last_4[0][1] && available_moves[k][0] == last_4[1][0] && available_moves[k][1] == last_4[1][1]) {
                                 new_game = null;
                                 continue;
                             }
                             var win_rate2 = new_game.bot_self_attack();
-                            if (win_rate[1] + win_rate2[1] * 4 > highest_win_rate) {
-                                highest_win_rate = win_rate[1] + win_rate2[1] * 4;
+                            if (win_rate2 == [0, 0]){
+                                new_game = null;
+                                return [[i, j], available_moves[k]];
+                            }
+                            else if (win_rate[1] + win_rate2[1] * 8 > highest_win_rate) {
+                                highest_win_rate = win_rate[1] + win_rate2[1] * 8;
                                 next_move = [[[i, j], available_moves[k]]];
                             }
-                            else if(win_rate[1] + win_rate2[1] * 4 === highest_win_rate){
+                            else if(win_rate[1] + win_rate2[1] * 8 === highest_win_rate){
                                 next_move.push[[i, j], available_moves[k]]
                             }
                             new_game = null;
