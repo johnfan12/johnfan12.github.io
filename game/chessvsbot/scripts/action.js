@@ -554,6 +554,7 @@ class Game {
                 new_game.board[i][j][1] = this.board[i][j][1];
             }
         }
+        new_game.player = this.player;
         return new_game;
     }
 
@@ -807,13 +808,13 @@ class Game {
         var red_defense_score = 0;
         for (let i = 0; i < red_control_area.length; i++) {
             if (red_control_area[i][0] < 4) {
-                red_defense_score += 12;
-            }
-            else if (red_control_area[i][0] < 6) {
                 red_defense_score += 30;
             }
+            else if (red_control_area[i][0] < 6) {
+                red_defense_score += 12;
+            }
             else {
-                red_defense_score += 27;
+                red_defense_score += 15;
             }
         }
         return red_defense_score;
@@ -824,13 +825,13 @@ class Game {
         var black_area_score = 0;
         for (let i = 0; i < black_control_area.length; i++) {
             if (black_control_area[i][0] > 5) {
-                black_area_score += 20;
+                black_area_score += 12;
             }
             else if (black_control_area[i][0] > 3) {
-                black_area_score += 50;
+                black_area_score += 30;
             }
             else {
-                black_area_score += 45;
+                black_area_score += 27;
             }
         }
         return black_area_score;
@@ -841,13 +842,13 @@ class Game {
         var black_defense_score = 0;
         for (let i = 0; i < black_control_area.length; i++) {
             if (black_control_area[i][0] > 5) {
-                black_defense_score += 50;
+                black_defense_score += 30;
             }
             else if (black_control_area[i][0] > 3) {
-                black_defense_score += 20;
+                black_defense_score += 12;
             }
             else {
-                black_defense_score += 10;
+                black_defense_score += 15;
             }
         }
         return black_defense_score;
@@ -1207,7 +1208,7 @@ class Game {
                                 continue;
                             }
                             var win_rate2 = new_game.bot_self_attack();
-                            if (win_rate2 == [0, 0]){
+                            if (win_rate2[0] === 0 && win_rate2[1] === 0){
                                 new_game = null;
                                 return [[i, j], available_moves[k]];
                             }
