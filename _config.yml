@@ -1,5 +1,7 @@
 title: "Hello Future"
 subtitle: "Version 2.0"
+teaser: "images/500x300.png"
+logo: "images/88x88.png"
 email: "1637504800@qq.com"
 name: "John Fan"
 description: "Stop useless effort and dive into what you are really interested in!"
@@ -81,3 +83,5 @@ plugins:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+include:
+  -_pages
