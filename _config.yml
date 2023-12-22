@@ -51,6 +51,8 @@ defaults:
       related: true
       show_date: true
       words_per_minute: 180
+comments:
+  provider: "custom"
 
 minimal_mistakes_skin: "dirt"
 locale: "zh"
@@ -58,7 +60,6 @@ date_format: "%Y-%m-%d"
 search: true
 paginate: 5
 markdown: kramdown
-provider: "custom"
 # Build settings
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:
