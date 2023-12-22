@@ -1,0 +1,9 @@
+main:
+  - title: "闲谈"
+    url: /
+  - title: "学习"
+    url: /study/
+  - title: "游戏"
+    url: /game/
+  - title: "考试时间表"
+    url: /timeline/timeline.html
