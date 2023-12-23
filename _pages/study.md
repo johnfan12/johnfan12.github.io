@@ -5,4 +5,5 @@ permalink: /study/
 collection: study
 entries_layout: archive
 classes: wide
+comments: false
 ---

@@ -1,7 +1,6 @@
 ---
 title: "考试时间表"
 permalink: /examtimeline/
-layout: default
 ---
 
 <!-- 日程表的容器 -->
