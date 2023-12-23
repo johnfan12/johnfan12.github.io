@@ -2,7 +2,6 @@
 title: "考试时间表"
 permalink: /time/
 layout: default
-js: ../script.js
 ---
 
 <!-- 日程表的容器 -->
@@ -12,4 +11,4 @@ js: ../script.js
   </ul>
 </div>
 
-<script src="script.js"></script>
+<script src="../timeline/script.js"></script>
