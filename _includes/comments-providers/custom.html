@@ -1,6 +1,4 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@3.0/dist/browser/styles/disqusjs.css">
-<script src="https://cdn.jsdelivr.net/npm/disqusjs@3.0/dist/browser/disqusjs.es2015.umd.min.js"></script>
-
 <!-- 如果你只兼容现代浏览器，你也可以使用 ES Module -->
 <script type="module">
   import DisqusJS from 'https://cdn.jsdelivr.net/npm/disqusjs@3.0/dist/browser/disqusjs.es2018.es.min.mjs'
@@ -15,5 +13,6 @@
     admin: 'disqus_4sgM2ziukw'
     });
     disqusjs.render(document.getElementById('disqusjs'));
-    disqusjs.destroy();
+    // 你也可以传入一个 CSS 选择器
+    // disqusjs.render('#disqusjs');
 </script>
