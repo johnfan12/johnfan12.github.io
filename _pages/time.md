@@ -2,7 +2,7 @@
 title: "考试时间表"
 permalink: /time/
 layout: default
-js: script.js
+js: ../script.js
 ---
 
 <!-- 日程表的容器 -->
