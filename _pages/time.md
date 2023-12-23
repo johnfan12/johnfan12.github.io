@@ -10,4 +10,6 @@ layout: default
     <!-- 日程事件将被添加到这里 -->
   </ul>
 </div>
+{% raw %}
 <script src="script.js"></script>
+{% endraw %}
