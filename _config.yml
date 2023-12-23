@@ -17,6 +17,7 @@ collections:
 
 comments:
   provider: "custom"
+  lazyload: false
 
 defaults:
   # _posts
