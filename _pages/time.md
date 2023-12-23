@@ -2,6 +2,7 @@
 title: "考试时间表"
 permalink: /time/
 layout: default
+js: script.js
 ---
 
 <!-- 日程表的容器 -->
@@ -10,6 +11,5 @@ layout: default
     <!-- 日程事件将被添加到这里 -->
   </ul>
 </div>
-{% raw %}
+
 <script src="script.js"></script>
-{% endraw %}
