@@ -6,7 +6,7 @@ email: "1637504800@qq.com"
 name: "John Fan"
 description: "Stop useless effort and dive into what you are really interested in!"
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://johnfan12.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: john
 github_username:  johnfan12
 
