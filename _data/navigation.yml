@@ -6,4 +6,4 @@ main:
   - title: "游戏"
     url: /game/
   - title: "考试时间表"
-    url: /time/
+    url: /examtimeline/

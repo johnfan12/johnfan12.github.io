@@ -1,6 +1,6 @@
 ---
 title: "考试时间表"
-permalink: /time/
+permalink: /examtimeline/
 layout: default
 ---
 
