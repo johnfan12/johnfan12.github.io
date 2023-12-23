@@ -42,7 +42,7 @@ defaults:
       path: ""
       type: study
     values:
-      layout: single
+      layout: default
       author: Yifan Wu
       author_profile: true
       read_time: true
@@ -52,7 +52,10 @@ defaults:
       show_date: true
       words_per_minute: 180
 comments:
-  provider: "custom"
+  provider: "disqus"
+  disqus:
+    shortname: "sxiaya"
+
 
 minimal_mistakes_skin: "dirt"
 locale: "zh"
