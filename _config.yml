@@ -16,7 +16,10 @@ collections:
     permalink: /:collection/:path/
 
 comments:
-  provider: "custom"
+  provider: "disqus"
+  disqus:
+    shortname: "sxiaya"
+
 
 defaults:
   # _posts
