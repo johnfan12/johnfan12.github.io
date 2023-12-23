@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@3.0/dist/browser/styles/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@3.0/dist/browser/disqusjs.es2015.umd.min.js"></script>
+
+<!-- 如果你只兼容现代浏览器，你也可以使用 ES Module -->
+<script type="module">
+  import DisqusJS from 'https://cdn.jsdelivr.net/npm/disqusjs@3.0/dist/browser/disqusjs.es2018.es.min.mjs'
+</script>
+<div id="disqusjs"></div>
+<script>
+    const disqusjs = new DisqusJS({
+    shortname: 'sxiaya',
+    siteName: 'sxiaya',
+    identifier: '',
+    url: '',
+    title: '',
+    api: 'https://smp.dzxywqlx.shop/api/',
+    apikey: '0rwVLv4kq7ZVPMPXGio2khXqYpWsMMZyFZwkQB8GM5E6KXGbh2R9HRnA7ik6ES51',
+    admin: 'disqus_4sgM2ziukw',
+    adminLabel: ''
+});
+disqusjs.render(document.getElementById('disqusjs'));
+// 你也可以传入一个 CSS 选择器
+// disqusjs.render('#disqusjs');
+</script>
