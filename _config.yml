@@ -25,6 +25,8 @@ comments:
     discussion_term      : "pathname" 
     reactions_enabled    : '1'
     theme                : "light"
+    lang                 : "zh-CN"
+    input_position       : "top"
 
 
 
