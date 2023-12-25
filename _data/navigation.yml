@@ -7,3 +7,6 @@ main:
     url: /game/
   - title: "考试时间表"
     url: /examtimeline/
+  - title: "关于"
+    url: /about/
+  
