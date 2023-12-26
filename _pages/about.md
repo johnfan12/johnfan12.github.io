@@ -5,10 +5,14 @@ title: "关于"
 
 ### 如何删除评论？
 
-
-{% include figure image_path="images/delete.png"%}
+![image-left](/images/delete.png){: .align-left}
 
 - 点击右边的yesterday或者你的评论时间，进入discussion里找到你自己的评论，点击右边三个点删除(Delete)即可。
+
+
+### 关于隐私：
+
+- 除评论外的任何操作，都不会被记录。
 
 ### 评论区规则
 
