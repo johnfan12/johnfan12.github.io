@@ -59,12 +59,10 @@ defaults:
       layout: single
       author: Yifan Wu
       author_profile: true
-      read_time: true
       comments: true
       share: true
       related: true
       show_date: true
-      words_per_minute: 180
 
 minimal_mistakes_skin: "dirt"
 locale: "zh"
