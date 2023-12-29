@@ -1,9 +1,9 @@
 ---
 title: 学习
-layout: collection
+layout: posts
 permalink: /study/
 collection: study
-entries_layout: archive
+entries_layout: grid
 classes: wide
 comments: false
 ---
