@@ -54,7 +54,7 @@ function renderEvent(event) {
   const li = document.createElement("li");
   const diff_time = eventTime - currentTime;
   if (diff_time < 0) {
-    li.innerText = event.title + ' ' + event.time + ' 已过期';
+    li.innerText = event.title + ' ' + event.time + ' 已结束';
   }
   else if (diff_time <= 1000 * 60 * 60 * 24 * 2) {
     li.innerText = '<' + event.title + ">" + ' 时间: ' + event.time + '\n还有 ' + time_format(diff_time);
@@ -97,7 +97,7 @@ function initCalendar() {
 
     // 添加到日程表
     document.getElementById("calendar").querySelector("ul").appendChild(li);
-    if (!li.textContent.includes("过期"))
+    if (!li.textContent.includes("结束"))
       count++;
   }
 
