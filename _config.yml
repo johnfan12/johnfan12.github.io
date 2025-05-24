@@ -69,7 +69,10 @@ locale: "zh"
 date_format: "%Y-%m-%d"
 search: true
 paginate: 5
-markdown: GFM
+markdown: kramdown
+kramdown:
+  math_engine: mathjax
+  syntax_highlighter: rouge
 # Build settings
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:

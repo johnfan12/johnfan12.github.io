@@ -1,4 +1,15 @@
-# [ICML 2024] SAMformer: 利用锐度感知最小化和通道注意力机制释放Transformer在时间序列预测中的潜力
+---
+layout: single
+title: "[ICML 2024] SAMformer: 利用锐度感知最小化和通道注意力机制释放Transformer在时间序列预测中的潜力"
+date: 2025-05-24
+categories: [论文解读, 机器学习]
+tags: [Transformer, 时间序列预测, SAM, 注意力机制]
+author: Yifan Wu
+author_profile: true
+mathjax: true
+toc: true
+toc_sticky: true
+---
 
 | 标题 | SAMformer: Unlocking the Potential of Transformers in Time Series Forecasting with Sharpness-Aware Minimization and Channel-Wise Attention |
 | ---- | ------------------------------------------------------------ |

@@ -1,0 +1,25 @@
+/* Custom styles for MathJax */
+.MathJax {
+  font-size: 1em !important;
+}
+
+.MathJax_Display {
+  margin: 1em 0 !important;
+}
+
+/* Ensure inline math doesn't break line height */
+.MJXc-display {
+  margin: 1em 0 !important;
+}
+
+/* Style for inline math */
+.MJXc-TeX-unknown-R {
+  font-family: inherit;
+}
+
+/* Prevent math from being too small on mobile */
+@media (max-width: 768px) {
+  .MathJax {
+    font-size: 0.9em !important;
+  }
+}
