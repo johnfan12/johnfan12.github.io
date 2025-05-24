@@ -69,10 +69,10 @@ A(X) = \text{softmax}\left( \frac{X W^Q (W^K)^⊤ X^⊤}{\sqrt{d_m}} \right) ∈
 $$
 接下来，我们希望明确注意力机制在解决公式（2）问题中扮演的角色。为此，我们设计了一个称为 **Random Transformer** 的模型，其中只有最终的线性参数 $W$ 会被优化，而注意力权重参数 $W^Q, W^K, W^V, W^O$ 在训练期间保持固定，并按 Glorot & Bengio（2010）方法初始化。此设定使模型等价于一个带随机映射的线性模型。最后，我们将两种模型（Transformer 与 Random Transformer）在训练优化后的局部最小值与**Oracle 模型**进行比较，Oracle 是对公式（1）采用最小二乘法的闭式解。
 
-![image-20250522154926958](/images/image-20250522154050465.png)
+![Figure 2](/images/Figure 2.png)
 从Figure 2中可以看出，尽管结构简单，Transformer 仍然存在严重的过拟合问题。将注意力权重固定可以提升模型的泛化能力，这暗示了注意力机制可能在阻碍模型收敛到最优局部极小值中发挥了作用。当注意力权重固定时，这一问题有所缓解，但 Random Transformer 仍不理想。此外，由于 Random Transformer 与标准 Transformer 之间的参数量只相差约 2%，因此该现象也不能归因于过拟合问题。我们推断出：Transformer 泛化能力差的根本原因主要在于其**注意力模块的可训练性问题**。
 
-![image-20250522154926958](/images/image-20250522154926958.png)
+![Figure 3](/images/Figure 3.png)
 
 Figure 3是Transformer 的线性回归损失分析。 **(a)** Transformer 的注意力矩阵在训练过程中从第一轮开始就陷入了恒等映射。 **(b, 左)** Transformer 收敛到比 Transformer + SAM 更尖锐的极小值，其最大特征值 $\lambda_{max}$ 明显更大（约为 ×10⁴），而 Random Transformer 则具有更平滑的损失景观。 **(b, 右)** Transformer 在训练过程中出现熵塌陷，验证了其损失景观的高度尖锐性。
 
@@ -80,7 +80,7 @@ Figure 3是Transformer 的线性回归损失分析。 **(a)** Transformer 的注
 
 基于上述发现，本文提出了SAMformer，一个专为时间序列预测设计的浅层轻量级Transformer模型。
 
-![image-20250522155201066](/images/image-20250522155201066.png)
+![Figure 5](/images/Figure 5.png)
 
 SAMformer的主要创新点包括：
 
@@ -102,7 +102,7 @@ SAMformer与多种基准模型进行了比较，包括：线性模型（如AutoA
 
 
 
-![image-20250522155825271](/images/image-20250522155825271.png)
+![Table 1](/images/Table 1.png)
 
 
 
