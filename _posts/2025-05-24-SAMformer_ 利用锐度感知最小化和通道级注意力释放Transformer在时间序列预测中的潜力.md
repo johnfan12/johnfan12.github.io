@@ -69,8 +69,7 @@ A(X) = \text{softmax}\left( \frac{X W^Q (W^K)^⊤ X^⊤}{\sqrt{d_m}} \right) ∈
 $$
 接下来，我们希望明确注意力机制在解决公式（2）问题中扮演的角色。为此，我们设计了一个称为 **Random Transformer** 的模型，其中只有最终的线性参数 $W$ 会被优化，而注意力权重参数 $W^Q, W^K, W^V, W^O$ 在训练期间保持固定，并按 Glorot & Bengio（2010）方法初始化。此设定使模型等价于一个带随机映射的线性模型。最后，我们将两种模型（Transformer 与 Random Transformer）在训练优化后的局部最小值与**Oracle 模型**进行比较，Oracle 是对公式（1）采用最小二乘法的闭式解。
 
-<img src="/images/image-20250522154050465.png" alt="image-20250522154050465" style="zoom:50%;" />
-
+![image-20250522154926958](/images/image-20250522154050465.png)
 从Figure 2中可以看出，尽管结构简单，Transformer 仍然存在严重的过拟合问题。将注意力权重固定可以提升模型的泛化能力，这暗示了注意力机制可能在阻碍模型收敛到最优局部极小值中发挥了作用。当注意力权重固定时，这一问题有所缓解，但 Random Transformer 仍不理想。此外，由于 Random Transformer 与标准 Transformer 之间的参数量只相差约 2%，因此该现象也不能归因于过拟合问题。我们推断出：Transformer 泛化能力差的根本原因主要在于其**注意力模块的可训练性问题**。
 
 ![image-20250522154926958](/images/image-20250522154926958.png)
