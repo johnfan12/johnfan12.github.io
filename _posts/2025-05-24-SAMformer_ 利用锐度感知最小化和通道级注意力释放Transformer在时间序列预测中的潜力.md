@@ -6,7 +6,6 @@ categories: [论文解读, 机器学习]
 tags: [Transformer, 时间序列预测, SAM, 注意力机制]
 author: Yifan Wu
 author_profile: true
-mathjax: true
 toc: true
 toc_sticky: true
 ---
