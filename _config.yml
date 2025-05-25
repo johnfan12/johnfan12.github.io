@@ -73,6 +73,8 @@ markdown: kramdown
 kramdown:
   math_engine: mathjax
   syntax_highlighter: rouge
+  input: GFM
+  hard_wrap: false
 # Build settings
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:
