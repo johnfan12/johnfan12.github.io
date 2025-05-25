@@ -3,7 +3,10 @@
   font-size: 1em !important;
 }
 
+/* 保证块级公式独占一行并居中显示 */
 .MathJax_Display {
+  display: block !important;
+  text-align: center !important;
   margin: 1em 0 !important;
 }
 
