@@ -106,7 +106,7 @@ SAMformer与多种基准模型进行了比较，包括：线性模型（如AutoA
 
 
 
-![Table 1](/images/Table%201.png)
+![Table 1](/images/Table 1.png)
 
 
 

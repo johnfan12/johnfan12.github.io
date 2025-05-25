@@ -3,46 +3,23 @@
   font-size: 1em !important;
 }
 
-/* 块级数学公式样式 */
-.MathJax_Display, 
-mjx-container[display="true"] {
-  margin: 1.5em 0 !important;
-  text-align: center !important;
-  display: block !important;
+.MathJax_Display {
+  margin: 1em 0 !important;
 }
 
-/* 内联数学公式样式 */
-mjx-container[display="false"] {
-  display: inline !important;
-  margin: 0 !important;
+/* Ensure inline math doesn't break line height */
+.MJXc-display {
+  margin: 1em 0 !important;
 }
 
-/* 确保公式编号正确对齐 */
-.MathJax .mjx-tag {
-  text-align: right !important;
+/* Style for inline math */
+.MJXc-TeX-unknown-R {
+  font-family: inherit;
 }
 
-/* 防止数学公式在移动设备上过小 */
+/* Prevent math from being too small on mobile */
 @media (max-width: 768px) {
   .MathJax {
     font-size: 0.9em !important;
   }
-  
-  mjx-container[display="true"] {
-    margin: 1em 0 !important;
-  }
-}
-
-/* 确保kramdown渲染的数学公式块正确显示 */
-.language-math {
-  display: block;
-  text-align: center;
-  margin: 1.5em 0;
-}
-
-/* 处理可能的渲染问题 */
-p > mjx-container[display="true"] {
-  display: block !important;
-  text-align: center !important;
-  margin: 1.5em auto !important;
 }
