@@ -37,7 +37,6 @@ defaults:
       layout: single
       author: Yifan Wu
       author_profile: true
-      read_time: true
       comments: true
       share: true
       related: true
