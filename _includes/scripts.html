@@ -26,3 +26,95 @@
     <script src="{{ script | relative_url }}"></script>
   {% endfor %}
 {% endif %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // 确保 MathJax 完全加载并准备就绪
+    if (typeof MathJax !== 'undefined' && MathJax.startup && MathJax.startup.promise) {
+      MathJax.startup.promise.then(() => {
+        console.log('MathJax is ready, starting content replacement for display math.');
+        replaceDisplayMathDelimiters();
+      }).catch(err => console.error('MathJax startup error:', err));
+    } else {
+      // 如果 MathJax 还未定义或没有 startup.promise，则稍后尝试或记录错误
+      console.warn('MathJax not fully loaded at DOMContentLoaded, attempting replacement anyway or deferring.');
+      // 尝试直接执行，或者设置一个短延时后执行，以防 MathJax 异步加载较慢
+      setTimeout(replaceDisplayMathDelimiters, 500);
+    }
+
+    function replaceDisplayMathDelimiters() {
+      // 获取所有可能包含 $$...$$ 的文本节点
+      // 我们将处理的范围限制在文章主要内容区域，以提高效率并避免意外替换
+      // 您可能需要根据您的 HTML 结构调整选择器，例如 '.post-content', 'article', 'main' 等
+      const contentAreas = document.querySelectorAll('article, .content, .post-content, body'); // 根据实际情况调整选择器
+
+      contentAreas.forEach(area => {
+        const walker = document.createTreeWalker(
+          area,
+          NodeFilter.SHOW_TEXT, // 只处理文本节点
+          null,
+          false
+        );
+
+        let node;
+        while (node = walker.nextNode()) {
+          // 忽略脚本和样式块内的文本
+          if (node.parentNode && (node.parentNode.nodeName === 'SCRIPT' || node.parentNode.nodeName === 'STYLE')) {
+            continue;
+          }
+          // 忽略 MathJax 已经处理过或者将要处理的区域
+          if (node.parentNode && (node.parentNode.classList.contains('MathJax_Preview') || node.parentNode.classList.contains('tex2jax_ignore'))) {
+            continue;
+          }
+          // 检查父元素是否已经是 mjx-container，如果是，则跳过，避免重复处理
+          let parent = node.parentNode;
+          let isInsideMathJaxOutput = false;
+          while(parent && parent !== area) {
+            if (parent.nodeName.toLowerCase().startsWith('mjx-')) {
+              isInsideMathJaxOutput = true;
+              break;
+            }
+            parent = parent.parentNode;
+          }
+          if (isInsideMathJaxOutput) {
+            continue;
+          }
+
+
+          const originalText = node.nodeValue;
+          // 使用更安全的替换，确保 $$...$$ 独立存在，而不是其他字符串的一部分
+          // 并且确保 $$ 之间有内容
+          // 正则表达式解释:
+          // (\$+) : 捕获一个或多个 $ 符号 (捕获组1, 即内联数学的开始)
+          // ([^\$]+?) : 捕获任何非 $ 字符，非贪婪模式 (捕获组2, 即公式内容)
+          // (\$+) : 捕获一个或多个 $ 符号 (捕获组3, 即内联数学的结束)
+          // 我们只对 displayMath 的 $$...$$ 感兴趣
+          // (?!\\) 负向前瞻，确保 $$ 前面没有反斜杠（避免匹配已转义的 \$）
+          // \$\$(?!\$) 匹配两个美元符号，后面不能紧跟另一个美元符号（避免匹配 $$$）
+          // ([\s\S]+?) 捕获两个$$之间的任何字符（包括换行符），非贪婪
+          // \$\$(?!\$) 匹配两个美元符号，后面不能紧跟另一个美元符号
+          const newText = originalText.replace(/(?<!\\)\$\$(?!\$)([\s\S]+?)\$\$(?!\$)/g, (match, formula) => {
+            console.log(`Replacing display math: ${match} with \\[${formula}\\]`);
+            return `\\[${formula}\\]`;
+          });
+
+          if (newText !== originalText) {
+            node.nodeValue = newText;
+          }
+        }
+      });
+
+      // 在替换完成后，如果 MathJax 已经加载，则告诉 MathJax重新排版页面
+      if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+        console.log('Retypesetting page with MathJax after replacements.');
+        MathJax.typesetPromise();
+      } else if (typeof MathJax !== 'undefined' && MathJax.Hub && MathJax.Hub.Queue) {
+        // 兼容 MathJax v2
+        console.log('Queueing MathJax typeset for v2 after replacements.');
+        MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
+      } else {
+        console.warn('MathJax typeset function not found after replacements.');
+      }
+    }
+  });
+</script>
