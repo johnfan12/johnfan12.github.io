@@ -19,6 +19,45 @@
 <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 <!-- MathJax Support -->
 <script>
+  // 在页面加载时自动替换数学公式格式
+  document.addEventListener('DOMContentLoaded', function() {
+    // 获取页面中所有的文本节点
+    function getTextNodes(node) {
+      var textNodes = [];
+      if (node.nodeType === Node.TEXT_NODE) {
+        textNodes.push(node);
+      } else {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          textNodes = textNodes.concat(getTextNodes(node.childNodes[i]));
+        }
+      }
+      return textNodes;
+    }
+
+    // 替换 $$...$$ 为 \\[...\\]
+    function replaceMathFormulas() {
+      var textNodes = getTextNodes(document.body);
+      textNodes.forEach(function(node) {
+        if (node.parentElement && 
+            (node.parentElement.tagName === 'SCRIPT' || 
+             node.parentElement.tagName === 'STYLE')) {
+          return; // 跳过script和style标签内的内容
+        }
+        
+        var text = node.textContent;
+        // 替换独立的 $$...$$ 为 \\[...\\]
+        var newText = text.replace(/\$\$([\s\S]*?)\$\$/g, '\\\\[$1\\\\]');
+        
+        if (newText !== text) {
+          node.textContent = newText;
+        }
+      });
+    }
+
+    // 执行替换
+    replaceMathFormulas();
+  });
+
   window.MathJax = {
     tex: {
       inlineMath: [['$', '$'], ['\\(', '\\)']],
