@@ -70,8 +70,6 @@ date_format: "%Y-%m-%d"
 search: true
 paginate: 5
 markdown: kramdown
-kramdown:
-  math_engine: mathjax
 # Build settings
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
 plugins:
