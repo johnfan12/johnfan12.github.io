@@ -54,25 +54,29 @@ toc_sticky: true
 
 尽管Transformer理论上能够表示任何函数，但研究发现，在这个简单的线性预测问题上，标准Transformer无法收敛到真实解。在多变量时间序列预测任务中，Transformer 的表现往往不如直接将输入投影到输出的简单线性神经网络。我们以这一观察为出发点，构建如下的生成模型，用于设计一个模拟时间序列预测任务的玩具回归问题：
 $$
-Y=XW_{toy}+\epsilon \tag1
+Y=XW_{toy}+\epsilon \tag{1}
 $$
-其中，我们设定：$L = 512，H = 96，D = 7$，$W_{toy}∈ ℝ^{L×H}$ 是一个线性映射矩阵，$ε ∈ ℝ^{D×H}$ 是高斯噪声项。我们随机生成了 15000 个输入-目标对（其中 10000 个用于训练，5000 个用于验证），其中每个输入矩阵$$X ∈ ℝ^{D×L}$$的元素均为正态分布随机数。
+
+其中，我们设定：$L = 512，H = 96，D = 7$，$W_{toy}∈ ℝ^{L×H}$ 是一个线性映射矩阵，$ε ∈ ℝ^{D×H}$ 是高斯噪声项。我们随机生成了 15000 个输入-目标对（其中 10000 个用于训练，5000 个用于验证），其中每个输入矩阵 $X ∈ ℝ^{D×L}$ 的元素均为正态分布随机数。
 
 在这个生成模型下，我们希望设计一个结构尽可能简洁、但仍能有效求解公式（1）问题的 Transformer 架构。为此，我们简化了标准的 Transformer 编码器结构：对输入 **X** 应用注意力机制，并将注意力输出与 **X** 残差连接相加；在此基础上，我们不再添加前馈神经网络模块，而是直接使用一个线性层进行输出预测。我们提出的模型定义如下：
+
 $$
-f(\mathbf{X}) = [\mathbf{X} + \mathbf{A}(\mathbf{X})\mathbf{XW}_V\mathbf{W}_O]\mathbf{W} \tag2
+f(\mathbf{X}) = [\mathbf{X} + \mathbf{A}(\mathbf{X})\mathbf{XW}_V\mathbf{W}_O]\mathbf{W} \tag{2}
 $$
 
 $W ∈ ℝ^{L×H}$，$W^V ∈ ℝ^{L×d_m}$，$W^O ∈ ℝ^{d_m×L}$，$A(X)$ 是对输入序列 $X ∈ ℝ^{D×L}$ 计算的注意力矩阵，其定义如下：
+
 $$
-A(X) = \text{softmax}\left( \frac{X W^Q (W^K)^⊤ X^⊤}{\sqrt{d_m}} \right) ∈ ℝ^{D×D} \tag3
+A(X) = \text{softmax}\left( \frac{X W^Q (W^K)^⊤ X^⊤}{\sqrt{d_m}} \right) ∈ ℝ^{D×D} \tag{3}
 $$
 接下来，我们希望明确注意力机制在解决公式（2）问题中扮演的角色。为此，我们设计了一个称为 **Random Transformer** 的模型，其中只有最终的线性参数 $W$ 会被优化，而注意力权重参数 $W^Q, W^K, W^V, W^O$ 在训练期间保持固定，并按 Glorot & Bengio（2010）方法初始化。此设定使模型等价于一个带随机映射的线性模型。最后，我们将两种模型（Transformer 与 Random Transformer）在训练优化后的局部最小值与**Oracle 模型**进行比较，Oracle 是对公式（1）采用最小二乘法的闭式解。
 
-![Figure 2](/images/Figure 2.png)
+![Figure 2](/images/Figure%202.png)
+
 从Figure 2中可以看出，尽管结构简单，Transformer 仍然存在严重的过拟合问题。将注意力权重固定可以提升模型的泛化能力，这暗示了注意力机制可能在阻碍模型收敛到最优局部极小值中发挥了作用。当注意力权重固定时，这一问题有所缓解，但 Random Transformer 仍不理想。此外，由于 Random Transformer 与标准 Transformer 之间的参数量只相差约 2%，因此该现象也不能归因于过拟合问题。我们推断出：Transformer 泛化能力差的根本原因主要在于其**注意力模块的可训练性问题**。
 
-![Figure 3](/images/Figure 3.png)
+![Figure 3](/images/Figure%203.png)
 
 Figure 3是Transformer 的线性回归损失分析。 **(a)** Transformer 的注意力矩阵在训练过程中从第一轮开始就陷入了恒等映射。 **(b, 左)** Transformer 收敛到比 Transformer + SAM 更尖锐的极小值，其最大特征值 $\lambda_{max}$ 明显更大（约为 ×10⁴），而 Random Transformer 则具有更平滑的损失景观。 **(b, 右)** Transformer 在训练过程中出现熵塌陷，验证了其损失景观的高度尖锐性。
 
@@ -80,7 +84,7 @@ Figure 3是Transformer 的线性回归损失分析。 **(a)** Transformer 的注
 
 基于上述发现，本文提出了SAMformer，一个专为时间序列预测设计的浅层轻量级Transformer模型。
 
-![Figure 5](/images/Figure 5.png)
+![Figure 5](/images/Figure%205.png)
 
 SAMformer的主要创新点包括：
 
@@ -98,11 +102,11 @@ SAMformer与多种基准模型进行了比较，包括：线性模型（如AutoA
 
 实验结果表明，SAMformer在大多数数据集和预测长度上都优于现有方法。
 
-![Figure 6](/images/Figure 6.png)
+![Figure 6](/images/Figure%206.png)
 
 
 
-![Table 1](/images/Table 1.png)
+![Table 1](/images/Table%201.png)
 
 
 
