@@ -1,3 +1,16 @@
+---
+layout: single
+title: "Weekly post 1"
+date: 2025-05-24
+author: Yifan Wu
+author_profile: true
+mathjax: true
+toc: true
+toc_sticky: true
+---
+
+
+
 # 复现iTransfomer
 
 论文核心思想：
