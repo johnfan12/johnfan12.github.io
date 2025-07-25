@@ -12,7 +12,7 @@ github_username:  johnfan12
 repository: "johnfan12/Forsitecomments"
 
 collections:
-  study:
+  photography:
     output: true
     permalink: /:collection/:path/
 
