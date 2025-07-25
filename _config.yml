@@ -50,10 +50,10 @@ defaults:
       layout: single
       author_profile: true
       comments: true
-  # _study
+  # _photography
   - scope:
       path: ""
-      type: study
+      type: photography
     values:
       layout: single
       author: Yifan Wu
