@@ -1,8 +1,8 @@
 main:
-  - title: "闲谈"
+  - title: "主页"
     url: /
-  - title: "学习"
-    url: /study/
+  - title: "摄影"
+    url: /photography/
   - title: "游戏"
     url: /game/
   - title: "考试时间表"
