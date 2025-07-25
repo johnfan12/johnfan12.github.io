@@ -1,8 +1,8 @@
 ---
-title: 学习
+title: 摄影
 layout: collection
-permalink: /study/
-collection: study
+permalink: /photography/
+collection: photography
 entries_layout: list
 classes: wide
 comments: false
