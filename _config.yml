@@ -70,7 +70,7 @@ search: true
 paginate: 5
 markdown: kramdown
 # Build settings
-remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+remote_theme: "mmistakes/minimal-mistakes@4.28.0"
 plugins:
   - jekyll-feed
   - jekyll-include-cache
