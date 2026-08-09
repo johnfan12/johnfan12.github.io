@@ -1,12 +1,7 @@
 main:
-  - title: "主页"
-    url: /
-  - title: "摄影"
-    url: /photography/
-  - title: "游戏"
-    url: /game/
-  - title: "考试时间表"
-    url: /examtimeline/
-  - title: "关于"
-    url: /about/
-  
+  - title: "生活"
+    url: /life/
+  - title: "投资"
+    url: /investment/
+  - title: "学习"
+    url: /study/

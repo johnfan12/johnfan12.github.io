@@ -42,6 +42,7 @@ defaults:
       related: true
       show_date: true
       words_per_minute: 180
+      section: 学习
   # _pages
   - scope:
       path: "_pages"
